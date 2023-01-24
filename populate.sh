@@ -7,7 +7,10 @@ then
     exit 0
 fi
 spd=${1%/} # This has to be the SLED project dir, i.e. the directory containing SLED_api
+dir=$(pwd)
+
 echo $spd
+echo $dir
 
 
 # Activate SLED environment

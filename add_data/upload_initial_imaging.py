@@ -65,7 +65,7 @@ for kk in range(len(surveys)):
                 f.close()
 
                 if uploadjson['exists'] == True:
-                    uploadjson['exists'] = basename = imagepath + os.path.basename(uploadjson['exists'])                
+                    uploadjson['exists'] = imagepath + os.path.basename(uploadjson['exists'])                
                 
                 #only include the ones with real data if we're going for API upload
                 if (not direct_upload) & uploadjson['exists']:
