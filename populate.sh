@@ -9,8 +9,6 @@ fi
 spd=${1%/} # This has to be the SLED project dir, i.e. the directory containing SLED_api
 echo $spd
 
-dir=$(pwd)
-echo $dir
 
 # Activate SLED environment
 if [ `hostname -s` = "django01" ]
