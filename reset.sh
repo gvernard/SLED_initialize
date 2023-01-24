@@ -70,8 +70,14 @@ fi
 # Migrate the database with the django server
 cd ${spd}/SLED_api
 
+echo "Running 'makemigrations': ..."
 python manage.py makemigrations
+echo "Running 'makemigrations': OK"
+
+echo "Running 'migrate': ..."
 python manage.py migrate
+echo "Running 'migrate': OK"
+
 
 echo ""
 echo ""
