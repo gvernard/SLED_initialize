@@ -21,7 +21,7 @@ from lenses.models import Catalogue, Instrument, Band, Users, Lenses
 from api.serializers import ImagingDataUploadSerializer
 from django.db.models import Q, F, Func, FloatField, CheckConstraint
 
-outpath='../images_to_upload/jsons/'
+outpath='../../initialize_database_data/images_to_upload/jsons/'
 verbose = True
 
 username, password = 'admin', '123'

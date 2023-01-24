@@ -20,7 +20,7 @@ from lenses.models import Imaging, Spectrum, Instrument, Band, Users, Lenses
 from api.serializers import ImagingDataUploadSerializer
 from django.db.models import Q, F, Func, FloatField, CheckConstraint
 
-outpath='../images_to_upload/'
+outpath='../../initialize_database_data/images_to_upload/'
 jsonpath = outpath+'jsons/'
 imagepath = outpath+'images/'
 verbose = True
