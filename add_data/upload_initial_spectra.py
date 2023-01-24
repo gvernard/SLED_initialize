@@ -69,8 +69,10 @@ for kk, lens in enumerate(lenses):
                 f = open(jsonfile)
                 uploadjson = json.load(f)
                 f.close()
+                
                 if uploadjson['exists']:
                     has_valid_spectrum = True
+                    uploadjson['image'] = imagepath + os.path.basename(uploadjson['image'])
 
                 if (not direct_upload) & uploadjson['exists']:
                     uploads.append(uploadjson)
