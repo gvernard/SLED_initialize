@@ -24,7 +24,7 @@ echo $dir
 
 
 
-python manage.py shell < ${dir}/add_users/populate_db.py
+python ${spd}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
 
 # Requires the server to be running for the API call
 cd ${dir}/add_lenses
