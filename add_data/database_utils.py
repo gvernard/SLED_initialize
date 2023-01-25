@@ -101,7 +101,7 @@ def upload_imaging_to_db_direct(datalist, username):
         if data['exists']:
             imaging.image.name = '/temporary/admin/' + savename
         if 'date_taken' in finaldata.keys():
-            imaging.date_taken = make_aware( datetime.datetime.fromisoformat(finaldata['date_taken']).date() )
+            imaging.date_taken = make_aware( datetime.datetime.fromisoformat(finaldata['date_taken']).replace(hour=0,minute=0,second=0,microsecond=0) )
         imaging.save()
 
     return None
@@ -139,7 +139,7 @@ def upload_spectrum_to_db_direct(datalist, username):
         if data['exists']:
             spectrum.image.name = '/temporary/admin/' + savename
         if 'date_taken' in finaldata.keys():
-            spectrum.date_taken = make_aware( datetime.datetime.fromisoformat(finaldata['date_taken']).date() )
+            spectrum.date_taken = make_aware( datetime.datetime.fromisoformat(finaldata['date_taken']).replace(hour=0,minute=0,second=0,microsecond=0) )
         else:
             #we apparently made the date taken a NOT_NULL field
             spectrum.date_taken = make_aware(datetime.datetime.fromisoformat('1858-11-17'))
@@ -162,7 +162,7 @@ def upload_catalogue_to_db_direct(datalist, username):
         catalogue = Catalogue(**finaldata)
         catalogue.owner_id = Users.objects.get(username=username).id
         if 'date_taken' in finaldata.keys():
-            catalogue.date_taken = make_aware( datetime.datetime.fromisoformat(finaldata['date_taken']).date() )
+            catalogue.date_taken = make_aware( datetime.datetime.fromisoformat(finaldata['date_taken']).replace(hour=0,minute=0,second=0,microsecond=0) )
         else:
             #we apparently made the date taken a NOT_NULL field
             catalogue.date_taken = make_aware(datetime.datetime.fromisoformat('1858-11-17'))
