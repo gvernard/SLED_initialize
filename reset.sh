@@ -27,7 +27,7 @@ then
 fi
 if ([ $database = "test" ] || [ $database = "production" ]) && [ `hostname -s` != "django01" ]
 then
-    echo "These test or production database has to be used on django01!"
+    echo "The test or production database has to be used on django01!"
     exit 0
 fi
 
@@ -40,10 +40,14 @@ cwd=$(pwd)
 cd ${cwd}/reset
 
 # Delete database tables
+echo "Reseting database..."
 ./reset_db.sh $database $host
+echo "Reseting database...OK"
 
 # Delete files
+echo "Deleting files..."
 ./reset_FILES.sh $database $host $spd
+echo "Deleting files...OK"
 
 # Server settings
 if [ $host = "localhost" ]
