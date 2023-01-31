@@ -34,7 +34,7 @@ verbose = False
 upload_again = True
 attempt_download = True
 direct_upload = True
-username, password = 'Cameron', '123'
+username, password = 'admin', '123'
 
 #data = Table.read('../trial_sample/lensed_quasars_uploadtable.fits')]
 lenses = Lenses.objects.all()
