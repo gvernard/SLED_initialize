@@ -32,6 +32,13 @@ user_array = [
         'last_name':'Vernardos',
         'email':'georgios.vernardos@epfl.ch'
     },
+    {
+        'username':'JAcevedo',
+        'first_name':'Javier',
+        'last_name':'Acevedo',
+        'email':'javier.acevedobarroso@epfl.ch'
+    },
+   
 ]
 for user_details in user_array:
     user = Users.objects.create_user(user_details**, password='123',affiliation='EPFL')
