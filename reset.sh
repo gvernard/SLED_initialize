@@ -88,15 +88,3 @@ echo "Running 'migrate': ..."
 python manage.py migrate
 echo "Running 'migrate': OK"
 
-
-echo ""
-echo ""
-echo " --- ATTENTION --- "
-echo ""
-echo "The django server will now be launched in this terminal."
-echo "If you want to populate the database run the respective script in a new terminal."
-echo "After the database is populated you can quit the server and close this terminal."
-echo ""
-echo ""
-
-python manage.py runserver
