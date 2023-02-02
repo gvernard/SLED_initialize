@@ -148,6 +148,7 @@ def upload_spectrum_to_db_direct(datalist, username):
 
 def upload_catalogue_to_db_direct(datalist, username):
 
+    model_instances = []
     for data in datalist:
 
         finaldata = data.copy()
@@ -155,16 +156,20 @@ def upload_catalogue_to_db_direct(datalist, username):
         finaldata['instrument'] = Instrument.objects.get(name=data['instrument'])
         finaldata['band'] = Band.objects.get(name=data['band'])
         lens = match_to_lens(float(data['radet']), float(data['decdet']))
-
-        finaldata['lens'] = lens[0]
-        finaldata.pop('ra')
-        finaldata.pop('dec')
-        catalogue = Catalogue(**finaldata)
-        catalogue.owner_id = Users.objects.get(username=username).id
-        if 'date_taken' in finaldata.keys():
-            catalogue.date_taken = make_aware( datetime.datetime.fromisoformat(finaldata['date_taken']).replace(hour=0,minute=0,second=0,microsecond=0) )
+        if lens:
+            finaldata['lens'] = lens[0]
+            finaldata.pop('ra')
+            finaldata.pop('dec')
+            catalogue = Catalogue(**finaldata)
+            catalogue.owner_id = Users.objects.get(username=username).id
+            if 'date_taken' in finaldata.keys():
+                catalogue.date_taken = make_aware( datetime.datetime.fromisoformat(finaldata['date_taken']).replace(hour=0,minute=0,second=0,microsecond=0) )
+            else:
+                #we apparently made the date taken a NOT_NULL field
+                catalogue.date_taken = make_aware(datetime.datetime.fromisoformat('1858-11-17'))
+            model_instances.append(catalogue)
         else:
-            #we apparently made the date taken a NOT_NULL field
-            catalogue.date_taken = make_aware(datetime.datetime.fromisoformat('1858-11-17'))
-        catalogue.save()
+            print(data, 'no lens to match to this position')
+    Catalogue.objects.bulk_create(model_instances)
+
     return 0

@@ -2,6 +2,20 @@ import json
 import requests
 from requests.auth import HTTPBasicAuth
 import glob
+import django
+import sys
+import os
+
+sys.path.append('../../SLED_api/')
+
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
+django.setup()
+
+from django.test import Client
+
+c = Client(SERVER_NAME='localhost')
+c.login(username='admin', password='123')
 
 # Specify the URL for the request to be sent
 url = "http://127.0.0.1:8000/api/upload-collection/"
@@ -18,12 +32,13 @@ for collection_json in collections:
 
 
     # Sending the request
-    r = requests.post(url,json=data,auth=HTTPBasicAuth('Cameron','123'))
+    r  = c.post('/api/upload-collection/', data=data, content_type="application/json")
+    #r = requests.post(url,json=data,auth=HTTPBasicAuth('Cameron','123'))
 
 
     # Printing the response of the request
-    if r.ok:
+    if r.status_code==200:
         print("Upload completed successfully!")
     else:
         print("Something went wrong!")
-    print(r.text)
+    print(r.content)

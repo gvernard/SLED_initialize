@@ -8,7 +8,7 @@ echo "Working on database: "$database
 if [ $database == "sqlite" ]
 then
     echo "Using local sqlite DB server..."
-    cd ../SLED_api/
+    cd ../../SLED_api/
     rm db.sqlite3
     rm */migrations/0*.py
 elif [ $database == "test" ]

@@ -68,12 +68,18 @@ then
     source /home/astro/gvernard/miniconda3/bin/activate sled
 else
     eval "$(conda shell.bash hook)"
-    conda activate sled
+    if [ `hostname -s` = "Camerons-macbook" ]
+    then
+        conda activate SLED_environment
+    else
+        conda activate sled
+    fi
 fi
 
 # Migrate the database with the django server
 cd ${spd}/SLED_api
 
+which python
 echo "Running 'makemigrations': ..."
 python manage.py makemigrations
 echo "Running 'makemigrations': OK"

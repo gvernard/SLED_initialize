@@ -19,7 +19,7 @@ then
     source /home/astro/gvernard/miniconda3/bin/activate sled
 else
     eval "$(conda shell.bash hook)"
-    conda activate sled
+    conda activate SLED_environment
 fi
 
 
@@ -29,19 +29,16 @@ echo "Adding users..."
 python ${spd}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
 echo "Adding users...OK"
 
-# Requires the server to be running for the API call
 echo "Adding lenses..."
 cd ${dir}/add_lenses
-python upload_through_api.py > ../report_add_lenses.txt
+python upload_directly.py > ../report_add_lenses.txt
 echo "Adding lenses...OK"
 
-# Requires the server to be running for the API call
 echo "Adding papers..."
 cd ${dir}/add_papers
 python upload_papers_API.py > ../report_add_papers.txt
 echo "Adding papers...OK"
 
-# Requires the server to be running for the API call
 echo "Adding collections..."
 cd ${dir}/add_collections
 python upload_collection.py > ../report_add_collections.txt
@@ -52,22 +49,19 @@ cd ${dir}/add_data
 python ${spd}/SLED_api/manage.py shell < add_instruments_bands.py
 echo "Adding instruments and bands...OK"
 
-# Requires the server to be running for the API call (through the database_utils.py)
 echo "Adding imaging data..."
 cd ${dir}/add_data
 python upload_initial_imaging.py ${spd}/SLED_api > ../report_add_imaging.txt
 echo "Adding imaging data...OK"
 
-# Requires the server to be running for the API call (through the database_utils.py)
 echo "Adding spectra..."
 cd ${dir}/add_data
 python upload_initial_spectra.py ${spd}/SLED_api > ../report_add_spectra.txt
 echo "Adding spectra...OK"
 
-# Requires the server to be running for the API call (through the database_utils.py)
 echo "Adding catalogue data..."
 cd ${dir}/add_data
-python upload_initial_catalogues.py ${spd}/SLED_api > ../report_add_catalogues.txt
+python upload_initial_catalogues_direct.py ${spd}/SLED_api > ../report_add_catalogues.txt
 echo "Adding catalogue data...OK"
 
 echo "Adding queries..."

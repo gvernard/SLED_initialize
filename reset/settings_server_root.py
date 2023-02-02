@@ -9,7 +9,7 @@ SESSION_COOKIE_SECURE = True
 
 CSRF_COOKIE_SECURE = True
 
-ALLOWED_HOSTS = ['django01.obs.unige.ch', '127.0.0.1']
+ALLOWED_HOSTS = ['django01.obs.unige.ch', '127.0.0.1', 'testserver']
 
 EMAIL_HOST_PASSWORD = os.environ['DJANGO_EMAIL_PASSWORD'] #cspwhr^U&k8QasR+'
 

@@ -14,7 +14,7 @@ f = open('../../initialize_database_data/instruments.json')
 instruments = json.load(f)
 f.close()
 for instrument in instruments:
-    instr = Instrument(name=instrument["name"],extended_name=instrument["extended_name"],info=instrument["info"])
+    instr = Instrument(name=instrument["name"],extended_name=instrument["extended_name"],info=instrument["info"], base_types=instrument["base_types"])
     try:
         instr.full_clean()
     except ValidationError as e:

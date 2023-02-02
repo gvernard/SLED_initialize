@@ -16,7 +16,7 @@ from lenses.models import Users, SledGroup, Lenses, SingleObject
 from django.forms.models import model_to_dict
 from guardian.shortcuts import assign_perm
 
-
+password = '123'
 
 # Create users
 user_array = [
@@ -32,16 +32,9 @@ user_array = [
         'last_name':'Vernardos',
         'email':'georgios.vernardos@epfl.ch'
     },
-    {
-        'username':'JAcevedo',
-        'first_name':'Javier',
-        'last_name':'Acevedo',
-        'email':'javier.acevedobarroso@epfl.ch'
-    },
-   
 ]
 for user_details in user_array:
-    user = Users.objects.create_user(user_details**, password='123',affiliation='EPFL')
+    user = Users.objects.create_user(**user_details, password='123',affiliation='EPFL')
     if user.username in ['Cameron','Giorgos']:
         user.is_staff = True
         user.save()
@@ -69,7 +62,7 @@ group_array = [
 
 group_owner = Users.objects.get(username='Cameron')
 for group_details in group_array:
-    sledgroup = SledGroup.objects.create(group_details**,owner=group_owner)
+    sledgroup = SledGroup.objects.create(**group_details,owner=group_owner)
 
 print('Populating the database with the following groups:',SledGroup.objects.all().values_list('name',flat=True))
 
