@@ -11,8 +11,6 @@ import os
 import sys
 import django
 
-sys.path.append('../../SLED_api/')
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 django.setup()
 
@@ -26,10 +24,6 @@ import glob
 
 download_missing_images_from_panstarrs_or_des = True
 
-# Specify the URL for the request to be sent
-url = "http://127.0.0.1:8000/api/upload-lenses/"
-urlquery = "http://127.0.0.1:8000/api/query-lenses/"
-urlupdatelens = "http://127.0.0.1:8000/api/update-lens/"
 # Specify the directory where the mugshot for each lens is found
 mugshot_dir = "../../initialize_database_data/images_to_upload/initial_mugshots/"
 csv_dir = "../../initialize_database_data/add_lenses_csvs/"
@@ -81,7 +75,6 @@ for eachcsv in csvs:
         lensdata = {'ra':lens_dict['ra'], 'dec':lens_dict['dec'], 'radius':10., 'user':user}
 
         r  = c.post('/api/query-lenses/', data=lensdata)
-        #r = requests.post(urlquery, data=lensdata, auth=HTTPBasicAuth('Cameron','123'))
         #df
         dbquery = json.loads(r.content)
         dblenses = dbquery['lenses']
@@ -137,7 +130,6 @@ for eachcsv in csvs:
 
             if send_update:
                 r  = c.post('/api/update-lens/', data=update_data, content_type="application/json")
-                #r = requests.post(urlupdatelens, json=update_data, auth=HTTPBasicAuth('Cameron','123'))
                 print(r.content)
                 #wait = input()
 
@@ -162,7 +154,6 @@ for eachcsv in csvs:
 
     # Sending the request
     r  = c.post('/api/upload-lenses/', data=form_data, content_type="application/json")
-    #r = requests.post(url, json=form_data, auth=HTTPBasicAuth('Cameron','123')) #, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
 
     # Printing the response of the request
     if r.status_code==200:
