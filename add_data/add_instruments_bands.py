@@ -10,7 +10,7 @@ import json
 from django.core.exceptions import ValidationError
 
 
-f = open('../../initialize_database_data/instruments.json')
+f = open('instruments.json')
 instruments = json.load(f)
 f.close()
 for instrument in instruments:
@@ -24,7 +24,7 @@ for instrument in instruments:
 
 
 
-f = open('../../initialize_database_data/bands.json')
+f = open('bands.json')
 bands = json.load(f)
 f.close()
 for band in bands:
