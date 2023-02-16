@@ -42,8 +42,6 @@ bandss = ['grizY', 'G', ['G', 'BP', 'RP']]
 instruments = ['Pan-STARRS1', 'Gaia-DR1', 'Gaia-DR2']
 
 
-all_uploads = []
-
 for kk in range(len(surveys)):
     survey, bands, instrument = surveys[kk], bandss[kk], instruments[kk]
     files = glob.glob(outpath+'*_'+survey+'*_photometry*')
@@ -55,6 +53,6 @@ for kk in range(len(surveys)):
         f.close()
         uploads.append(uploadjson)
 
-    uploads = database_utils.upload_catalogue_to_db_direct(datalist=uploads, username=username)
+    upload = database_utils.upload_catalogue_to_db_direct(datalist=uploads, username=username)
 
 #Catalogue.objects.bulk_create(all_uploads)

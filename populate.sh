@@ -34,11 +34,6 @@ cd ${dir}/add_lenses
 python ${spd}/SLED_api/manage.py shell < upload_directly.py > ../report_add_lenses.txt
 echo "Adding lenses...OK"
 
-echo "Adding papers..."
-cd ${dir}/add_papers
-python ${spd}/SLED_api/manage.py shell < upload_papers_API.py > ../report_add_papers.txt
-echo "Adding papers...OK"
-
 echo "Adding collections..."
 cd ${dir}/add_collections
 python ${spd}/SLED_api/manage.py shell < upload_collection.py > ../report_add_collections.txt
@@ -56,7 +51,7 @@ echo "Adding imaging data...OK"
 
 echo "Adding HST imaging data..."
 cd ${dir}/add_data
-python upload_initial_HST_imaging.py ${spd}/SLED_api > ../report_add_imaging.txt
+python upload_initial_HST_imaging.py ${spd}/SLED_api > ../report_add_HST_imaging.txt
 echo "Adding HST imaging data...OK"
 
 echo "Adding spectra..."
@@ -73,3 +68,8 @@ echo "Adding queries..."
 cd ${dir}/add_queries
 python ${spd}/SLED_api/manage.py shell < create_queries.py
 echo "Adding queries...OK"
+
+echo "Adding papers..."
+cd ${dir}/add_papers
+python ${spd}/SLED_api/manage.py shell < upload_papers_API.py > ../report_add_papers.txt
+echo "Adding papers...OK"

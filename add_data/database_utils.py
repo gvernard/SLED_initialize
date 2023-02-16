@@ -78,7 +78,6 @@ def upload_imaging_to_db_direct(datalist, username):
         if not os.path.exists(path):
             os.makedirs(path)
 
-        print(data)
         #check if the data exists and therefore should have an image
         if data['exists']:
             if '/' in data['image']:
@@ -90,18 +89,18 @@ def upload_imaging_to_db_direct(datalist, username):
                 destination.write(open(data['image'],'rb').read())
 
         finaldata['instrument'] = Instrument.objects.get(name=data['instrument'])
-        print(data['band'])
 
         if data['band'] not in list(Band.objects.all().values_list('name', flat=True).distinct()):
-            print('Band did not exist in database, creating it now')
             create_band(data['band'])
-            print('created band')
 
         finaldata['band'] = Band.objects.get(name=data['band'])
 
         #indices,neis = Lenses.proximate.get_DB_neighbours_anywhere_many([data['ra']], [data['dec']])
         lens = match_to_lens(data['ra'], data['dec'])
-
+        if not lens:
+            print('No lens found for the following data upload')
+            print(data)
+            continue
         finaldata['lens'] = lens[0]
         finaldata.pop('ra')
         finaldata.pop('dec')
@@ -118,7 +117,7 @@ def upload_imaging_to_db_direct(datalist, username):
         imaging_list.append(imaging)
         if len(imaging_list) == 1000:
             ad_col = AdminCollection.objects.create(item_type="Imaging",myitems=imaging_list)
-            action.send(request.user,target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
+            action.send(Users.objects.get(username='admin'),target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
             imaging_list.clear()
             
     return None
@@ -147,6 +146,10 @@ def upload_spectrum_to_db_direct(datalist, username):
 
         finaldata['instrument'] = Instrument.objects.get(name=data['instrument'])
         lens = match_to_lens(float(data['ra']), float(data['dec']))
+        if not lens:
+            print('No lens found for the following data upload')
+            print(data)
+            continue
 
         finaldata['lens'] = lens[0]
         finaldata.pop('ra')
@@ -167,7 +170,7 @@ def upload_spectrum_to_db_direct(datalist, username):
         spectrum_list.append(spectrum)
         if len(spectrum_list) == 1000:
             ad_col = AdminCollection.objects.create(item_type="Spectrum",myitems=spectrum_list)
-            action.send(request.user,target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
+            action.send(Users.objects.get(username='admin'),target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
             spectrum_list.clear()
 
     return 0
@@ -224,7 +227,7 @@ def upload_catalogue_to_db_direct(datalist, username):
 
         if len(catalogue_list) == 1000:
             ad_col = AdminCollection.objects.create(item_type="Catalogue",myitems=catalogue_list)
-            action.send(request.user,target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
+            action.send(Users.objects.get(username='admin'),target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
             catalogue_list.clear()
 
     return 0
