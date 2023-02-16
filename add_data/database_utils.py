@@ -13,10 +13,12 @@ import django
 django.setup()
 
 from django.conf import settings
-from lenses.models import Catalogue, Imaging, Spectrum, Instrument, Band, Users, Lenses
+from lenses.models import Catalogue, Imaging, Spectrum, Instrument, Band, Users, Lenses, AdminCollection
 from api.serializers import ImagingDataUploadSerializer
 from django.db.models import Q, F, Func, FloatField, CheckConstraint
 from django.utils.timezone import make_aware
+from actstream import action
+
 
 def match_to_lens(ra, dec):
     qset = Lenses.objects.all().annotate(distance=Func(F('ra'),F('dec'),ra,dec,function='distance_on_sky',output_field=FloatField())).filter(distance__lt=10.)
@@ -68,6 +70,7 @@ def upload_imaging_to_db_direct(datalist, username):
     datalist: list of json files containing the neccessary metadata for the Imaging table
     this function creates objects directly in the database; to be used by automatic uploads
     """
+    imaging_list = []
     for data in datalist:
         finaldata = data.copy()
 
@@ -112,9 +115,17 @@ def upload_imaging_to_db_direct(datalist, username):
             imaging.date_taken = make_aware( datetime.datetime.fromisoformat(finaldata['date_taken']).replace(hour=0,minute=0,second=0,microsecond=0) )
         imaging.save()
 
+        imaging_list.append(imaging)
+        if len(imaging_list) == 1000:
+            ad_col = AdminCollection.objects.create(item_type="Imaging",myitems=imaging_list)
+            action.send(request.user,target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
+            imaging_list.clear()
+            
     return None
 
 def upload_spectrum_to_db_direct(datalist, username):
+
+    spectrum_list = []
 
     for data in datalist:
 
@@ -152,6 +163,13 @@ def upload_spectrum_to_db_direct(datalist, username):
             #we apparently made the date taken a NOT_NULL field
             spectrum.date_taken = make_aware(datetime.datetime.fromisoformat('1858-11-17'))
         spectrum.save()
+
+        spectrum_list.append(spectrum)
+        if len(spectrum_list) == 1000:
+            ad_col = AdminCollection.objects.create(item_type="Spectrum",myitems=spectrum_list)
+            action.send(request.user,target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
+            spectrum_list.clear()
+
     return 0
 
 
@@ -180,9 +198,8 @@ def create_band(bandname):
 
 def upload_catalogue_to_db_direct(datalist, username):
 
-    model_instances = []
+    catalogue_list = []
     for data in datalist:
-
         finaldata = data.copy()
 
         finaldata['instrument'] = Instrument.objects.get(name=data['instrument'])
@@ -199,9 +216,15 @@ def upload_catalogue_to_db_direct(datalist, username):
             else:
                 #we apparently made the date taken a NOT_NULL field
                 catalogue.date_taken = make_aware(datetime.datetime.fromisoformat('1858-11-17'))
-            model_instances.append(catalogue)
+            catalogue.save()
+            
+            catalogue_list.append(catalogue)
         else:
             print(data, 'no lens to match to this position')
-    Catalogue.objects.bulk_create(model_instances)
+
+        if len(catalogue_list) == 1000:
+            ad_col = AdminCollection.objects.create(item_type="Catalogue",myitems=catalogue_list)
+            action.send(request.user,target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
+            catalogue_list.clear()
 
     return 0

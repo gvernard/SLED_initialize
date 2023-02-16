@@ -31,17 +31,17 @@ echo "Adding users...OK"
 
 echo "Adding lenses..."
 cd ${dir}/add_lenses
-python upload_directly.py > ../report_add_lenses.txt
+python ${spd}/SLED_api/manage.py shell < upload_directly.py > ../report_add_lenses.txt
 echo "Adding lenses...OK"
 
 echo "Adding papers..."
 cd ${dir}/add_papers
-python upload_papers_API.py > ../report_add_papers.txt
+python ${spd}/SLED_api/manage.py shell < upload_papers_API.py > ../report_add_papers.txt
 echo "Adding papers...OK"
 
 echo "Adding collections..."
 cd ${dir}/add_collections
-python upload_collection.py > ../report_add_collections.txt
+python ${spd}/SLED_api/manage.py shell < upload_collection.py > ../report_add_collections.txt
 echo "Adding collections...OK"
 
 echo "Adding instruments and bands..."

@@ -11,8 +11,6 @@ import os
 import sys
 import django
 
-sys.path.append('../../SLED_api/')
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 django.setup()
 
@@ -25,7 +23,6 @@ import legacysurvey_utils
 import glob
 
 download_missing_images_from_panstarrs_or_des = True
-
 
 # Specify the directory where the mugshot for each lens is found
 mugshot_dir = "../../initialize_database_data/images_to_upload/initial_mugshots/"
@@ -62,6 +59,7 @@ for eachcsv in csvs:
         user = Users.objects.get(username='admin')
         lensdata = {'ra':lens_dict['ra'], 'dec':lens_dict['dec'], 'radius':10., 'user':user}
         r  = c.post('/api/query-lenses/', data=lensdata)
+
         dbquery = json.loads(r.content)
         dblenses = dbquery['lenses']
         
@@ -126,7 +124,6 @@ for eachcsv in csvs:
 
     # Sending the request
     r  = c.post('/api/upload-lenses/', data=form_data, content_type="application/json")
-    #r = requests.post(url, json=form_data, auth=HTTPBasicAuth('Cameron','123')) #, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
 
     # Printing the response of the request
     if r.status_code==200:
