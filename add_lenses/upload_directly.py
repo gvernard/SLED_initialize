@@ -14,15 +14,11 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 django.setup()
 
-
 from django.test import Client
 from lenses.models import Catalogue, Instrument, Band, Users, Lenses
 
-import panstarrs_utils
-import legacysurvey_utils
 import glob
 
-download_missing_images_from_panstarrs_or_des = True
 
 # Specify the directory where the mugshot for each lens is found
 mugshot_dir = "../../initialize_database_data/images_to_upload/initial_mugshots/"
