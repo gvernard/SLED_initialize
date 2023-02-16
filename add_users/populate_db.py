@@ -37,7 +37,7 @@ for user_details in user_array:
     user = Users.objects.create_user(**user_details, password='123',affiliation='EPFL')
     if user.username in ['Cameron','Giorgos']:
         user.is_staff = True
-        user.save()
+    user.save()
         
 # Create superuser
 Users.objects.create_superuser(username='admin',password=password,email='admin@example.com')
