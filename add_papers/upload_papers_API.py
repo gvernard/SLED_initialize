@@ -12,7 +12,7 @@ import sys
 import glob
 import django
 
-
+sys.path.append('../../SLED_api/')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 django.setup()
 
