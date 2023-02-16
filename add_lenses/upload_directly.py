@@ -20,16 +20,13 @@ django.setup()
 from django.test import Client
 from lenses.models import Catalogue, Instrument, Band, Users, Lenses
 
-#import panstarrs_utils
-#import legacysurvey_utils
+import panstarrs_utils
+import legacysurvey_utils
 import glob
 
 download_missing_images_from_panstarrs_or_des = True
 
-# Specify the URL for the request to be sent
-url = "http://127.0.0.1:8000/api/upload-lenses/"
-urlquery = "http://127.0.0.1:8000/api/query-lenses/"
-urlupdatelens = "http://127.0.0.1:8000/api/update-lens/"
+
 # Specify the directory where the mugshot for each lens is found
 mugshot_dir = "../../initialize_database_data/images_to_upload/initial_mugshots/"
 csv_dir = "../../initialize_database_data/add_lenses_csvs/"
@@ -40,37 +37,22 @@ c.login(username='admin', password='123')
 #image_files = []
 csvs = np.sort(glob.glob(csv_dir+'*.csv'))
 
+
+allupdates = []
 for eachcsv in csvs:
-    #for i in [0]:
-    #eachcsv = './csvs/2022MNRAS.509..738D.csv'
-    print(eachcsv)
+
     lens_dicts = []
     data = pd.read_csv(eachcsv, skipinitialspace=True)
 
     #this deals with nans where you have empty entries
     data = data.fillna({key:'' for key in data.keys()})
-    for i in range(len(data)):
 
+    #loop through each lens in the paper csv
+    for i in range(len(data)):
         lens_dict = data.iloc[i].to_dict()
-        #print(lens_dict)
-        #image = Image.open(mugshot_dir+lens_dict['imagename'])
+
         if lens_dict['imagename']=='':
             lens_dict['imagename'] = lens_dict['name'].split(',')[0].strip()+'.png'
-        #if os.path.exists(mugshot_dir+lens_dict['imagename']):
-        #    os.system('rm '+mugshot_dir+lens_dict['imagename'])
-        if not os.path.exists(mugshot_dir+lens_dict['imagename']):
-            print('The following mugshot does not exist:', mugshot_dir+lens_dict['imagename'])
-
-            if download_missing_images_from_panstarrs_or_des:
-                print('Querying PS to make it')
-                try:
-                    print('trying panstarrs with ra, dec', lens_dict['ra'], lens_dict['dec'])
-                    panstarrs_utils.savecolorim(ra=lens_dict['ra'], dec=lens_dict['dec'], arcsec_width=10, outpath=mugshot_dir+lens_dict['imagename'])
-                except Exception:
-                    try:
-                        legacysurvey_utils.savecolorim(ra=lens_dict['ra'], dec=lens_dict['dec'], arcsec_width=10, outpath=mugshot_dir+lens_dict['imagename'])
-                    except Exception:
-                        pass
 
         img = cv2.imread(mugshot_dir+lens_dict['imagename'])
         string_img = base64.b64encode(cv2.imencode('.jpg', img)[1]).decode()
@@ -79,16 +61,13 @@ for eachcsv in csvs:
         #CHECK IF LENS ALREADY EXISTS
         user = Users.objects.get(username='admin')
         lensdata = {'ra':lens_dict['ra'], 'dec':lens_dict['dec'], 'radius':10., 'user':user}
-
         r  = c.post('/api/query-lenses/', data=lensdata)
-        #r = requests.post(urlquery, data=lensdata, auth=HTTPBasicAuth('Cameron','123'))
-        #df
         dbquery = json.loads(r.content)
         dblenses = dbquery['lenses']
+        
         if len(dblenses)>0:
             dblens = dblenses[0]
-            print('EXISTING LENS!')
-            print('CHECKING FOR UPDATED FIELDS')
+
             update_data = {'ra':dblens['ra'], 'dec':dblens['dec']}
             send_update = False
 
@@ -136,10 +115,7 @@ for eachcsv in csvs:
                                 
 
             if send_update:
-                r  = c.post('/api/update-lens/', data=update_data, content_type="application/json")
-                #r = requests.post(urlupdatelens, json=update_data, auth=HTTPBasicAuth('Cameron','123'))
-                print(r.content)
-                #wait = input()
+                allupdates.append(update_data)
 
         else:
             lens_dicts.append(lens_dict)
@@ -147,18 +123,6 @@ for eachcsv in csvs:
     form_data = lens_dicts
     if len(form_data)==0:
         continue
-    '''form_data = [
-        ('N', ('',str(len(lenses)))),
-        ('ra', ('',str(lenses[0]['ra']))),
-        ('dec', ('',str(lenses[0]['dec']))),
-        ('mugshot', open(mugshot_dir + lenses[0]["mugshot"],"rb")),
-        ('ra', ('',str(lenses[1]['ra']))),
-        ('dec', ('',str(lenses[1]['dec']))),
-        ('mugshot', open(mugshot_dir + lenses[1]["mugshot"],"rb"))
-    ]
-    print(form_data)'''
-    #files = [('json', (None, json.dumps(lens_dicts[0]), 'application/json')),
-    #         ('media', (image_files[0]))]
 
     # Sending the request
     r  = c.post('/api/upload-lenses/', data=form_data, content_type="application/json")
@@ -174,3 +138,4 @@ for eachcsv in csvs:
             wait = input()
             print('d///f')
     
+r  = c.post('/api/update-lens/', data=allupdates, content_type="application/json")

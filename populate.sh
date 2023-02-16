@@ -54,6 +54,11 @@ cd ${dir}/add_data
 python upload_initial_imaging.py ${spd}/SLED_api > ../report_add_imaging.txt
 echo "Adding imaging data...OK"
 
+echo "Adding HST imaging data..."
+cd ${dir}/add_data
+python upload_initial_HST_imaging.py ${spd}/SLED_api > ../report_add_imaging.txt
+echo "Adding HST imaging data...OK"
+
 echo "Adding spectra..."
 cd ${dir}/add_data
 python upload_initial_spectra.py ${spd}/SLED_api > ../report_add_spectra.txt
