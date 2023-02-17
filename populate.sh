@@ -14,11 +14,11 @@ echo $dir
 
 
 # Activate SLED environment
+eval "$(conda shell.bash hook)"
 if [ `hostname -s` = "django01" ]
 then
-    source /home/astro/gvernard/miniconda3/bin/activate sled
+    conda activate /projects/astro/sled/SLED_environment
 else
-    eval "$(conda shell.bash hook)"
     conda activate SLED_environment
 fi
 
