@@ -41,7 +41,7 @@ cd ${cwd}/reset
 
 # Delete database tables
 echo "Reseting database..."
-./reset_db.sh $database $host
+./reset_db.sh $database $spd
 echo "Reseting database...OK"
 
 # Delete files
