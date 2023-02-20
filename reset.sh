@@ -60,7 +60,7 @@ else
     else
 	export DJANGO_SECRET_KEY=`cat ${spd}/launch_server/secret_key.txt`
 	export DJANGO_EMAIL_PASSWORD=`cat ${spd}/launch_server/email_password.txt`
-	cp settings_server_root.py ${spd}/SLED_api/mysite/settings.py
+	cp ${spd}/launch_server/settings_server_root.py ${spd}/SLED_api/mysite/settings.py
     fi
 fi
 

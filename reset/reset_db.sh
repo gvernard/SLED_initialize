@@ -15,12 +15,12 @@ elif [ $database == "test" ]
 then
     echo "Using TEST Mysql DB server..."
     echo "Dropping all tables"
-    bash drop_all_tables.sh ../SENSITIVE/localhost_test.cnf
+    bash drop_all_tables.sh ${spd}/launch_server/localhost_test.cnf
 elif [ $database == "production" ]
 then
     echo "Using PRODUCTION Mysql DB server..."
     echo "Dropping all tables"
-    bash drop_all_tables.sh ../SENSITIVE/server_root.cnf
+    bash drop_all_tables.sh ${spd}/launch_server/server_root.cnf
 fi
 
 
