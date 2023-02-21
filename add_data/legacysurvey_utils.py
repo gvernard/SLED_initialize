@@ -36,6 +36,8 @@ def legacysurvey_data(name, ra, dec, band, layer='ls-dr9-south', outpath='./imag
         if layer=='ls-dr9-north':
             fits_outname = outpath+name+'_LegacySurveyNorth_'+band+'.fits'
         outname = save_single_band_layer(fits_outname, ra, dec, size=size, band=band.lower(), layer=layer)
+        if outname==0:
+            return 0
         if outname is None:
             if verbose:
                 print('No ', layer,' data existed for RA, Dec=', ra, dec, 'and filter', band)
@@ -49,7 +51,7 @@ def save_single_band_layer(fits_outname, ra, dec, size=10, band='g', layer='ls-d
     #if r.status_code==500:
     #    return None
     if r.status_code!=200:
-        return None
+        return 0
     open(fits_outname,"wb").write(r.content)
     data = fits.open(fits_outname)[0].data
     if np.nanmax(data)==0.:
@@ -115,11 +117,11 @@ def legacy_survey_colour_image(ra, dec, layer='ls-dr9', size=60):
 
 
 
-def savecolorim(ra, dec, arcsec_width, outpath):
+def savecolorim(ra, dec, arcsec_width, outpath, layer='ls-dr9'):
     size = int(arcsec_width/0.262)
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    im = legacy_survey_colour_image(ra=ra, dec=dec, size=size)
+    im = legacy_survey_colour_image(ra=ra, dec=dec, size=size, layer='ls-dr10')
     ax.imshow(im, interpolation='nearest')
     ax.set_xticks([])
     ax.set_yticks([])
