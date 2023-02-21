@@ -14,15 +14,20 @@ echo $dir
 
 
 # Activate SLED environment
+eval "$(conda shell.bash hook)"
 if [ `hostname -s` = "django01" ]
 then
-    source /home/astro/gvernard/miniconda3/bin/activate sled
+    conda activate /projects/astro/sled/SLED_environment
 else
-    eval "$(conda shell.bash hook)"
     conda activate SLED_environment
 fi
 
 
+if [ `hostname -s` == "django01" ]
+then
+    export DJANGO_SECRET_KEY=`cat ${spd}/launch_server/secret_key.txt`
+    export DJANGO_EMAIL_PASSWORD=`cat ${spd}/launch_server/email_password.txt`   
+fi
 
 
 echo "Adding users..."
@@ -44,15 +49,15 @@ cd ${dir}/add_data
 python ${spd}/SLED_api/manage.py shell < add_instruments_bands.py
 echo "Adding instruments and bands...OK"
 
-echo "Adding imaging data..."
-cd ${dir}/add_data
-python upload_initial_imaging.py ${spd}/SLED_api > ../report_add_imaging.txt
-echo "Adding imaging data...OK"
-
 echo "Adding HST imaging data..."
 cd ${dir}/add_data
 python upload_initial_HST_imaging.py ${spd}/SLED_api > ../report_add_HST_imaging.txt
 echo "Adding HST imaging data...OK"
+
+echo "Adding imaging data..."
+cd ${dir}/add_data
+python upload_initial_imaging.py ${spd}/SLED_api > ../report_add_imaging.txt
+echo "Adding imaging data...OK"
 
 echo "Adding spectra..."
 cd ${dir}/add_data

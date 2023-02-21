@@ -10,8 +10,12 @@ import base64
 import os
 import sys
 import django
+<<<<<<< HEAD
 sys.path.append('../../SLED_api/')
 
+=======
+import socket
+>>>>>>> eeb4353ef44e29182179a69af6609ea813ad3a15
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 django.setup()
@@ -26,7 +30,8 @@ import glob
 mugshot_dir = "../../initialize_database_data/images_to_upload/initial_mugshots/"
 csv_dir = "../../initialize_database_data/add_lenses_csvs/"
 
-c = Client(SERVER_NAME='localhost')
+hostname = socket.gethostbyname(socket.gethostname())
+c = Client(SERVER_NAME=hostname)
 c.login(username='admin', password='123')
 
 #image_files = []

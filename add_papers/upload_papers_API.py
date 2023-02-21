@@ -11,6 +11,7 @@ import os
 import sys
 import glob
 import django
+import socket
 
 sys.path.append('../../SLED_api/')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
@@ -18,7 +19,8 @@ django.setup()
 
 from django.test import Client
 
-c = Client(SERVER_NAME='localhost')
+hostname = socket.gethostbyname(socket.gethostname())
+c = Client(SERVER_NAME=hostname)
 c.login(username='admin', password='123')
 
 

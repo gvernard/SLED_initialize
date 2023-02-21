@@ -41,7 +41,7 @@ cd ${cwd}/reset
 
 # Delete database tables
 echo "Reseting database..."
-./reset_db.sh $database $host
+./reset_db.sh $database $spd
 echo "Reseting database...OK"
 
 # Delete files
@@ -58,16 +58,18 @@ else
     then
 	cp ${spd}/launch_server/settings_server_test.py ${spd}/SLED_api/mysite/settings.py
     else
-	cp settings_server_root.py ${spd}/SLED_api/mysite/settings.py
+	export DJANGO_SECRET_KEY=`cat ${spd}/launch_server/secret_key.txt`
+	export DJANGO_EMAIL_PASSWORD=`cat ${spd}/launch_server/email_password.txt`
+	cp ${spd}/launch_server/settings_server_root.py ${spd}/SLED_api/mysite/settings.py
     fi
 fi
 
 # Activate SLED environment
+eval "$(conda shell.bash hook)"
 if [ `hostname -s` = "django01" ]
 then
-    source /home/astro/gvernard/miniconda3/bin/activate sled
+    conda activate /projects/astro/sled/SLED_environment
 else
-    eval "$(conda shell.bash hook)"
     conda activate SLED_environment
 fi
 
