@@ -21,7 +21,7 @@ TABLES=$($MYSQL -h $MHOST -P $MPORT -u $MUSER -p$MPASS $MDB -e 'show tables' | $
 
 for t in $TABLES
 do
-    echo "Deleting $t table from $MDB database..."
+    echo "Deleting table: $t"
     $MYSQL -h $MHOST -P $MPORT -u $MUSER -p$MPASS $MDB -e "SET FOREIGN_KEY_CHECKS=0; DROP TABLE $t;" # The FOREIGN_KEY_CHECKS applies per connection.
 done
 $MYSQL -h $MHOST -P $MPORT -u $MUSER -p$MPASS $MDB -e "DROP FUNCTION distance_on_sky;"

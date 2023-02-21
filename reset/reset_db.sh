@@ -10,7 +10,6 @@ then
     echo "Using local sqlite DB server..."
     cd ${spd}/SLED_api/
     rm db.sqlite3
-    rm */migrations/0*.py
 elif [ $database == "test" ]
 then
     echo "Using TEST Mysql DB server..."
@@ -30,5 +29,4 @@ then
     fi    
 fi
 
-
-
+rm ${spd}/SLED_api/*/migrations/0*.py
