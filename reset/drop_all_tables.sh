@@ -20,12 +20,11 @@ MPASS=$($AWK '/^password/{print $3}' $cnf_file)
 TABLES=$($MYSQL -h $MHOST -P $MPORT -u $MUSER -p$MPASS $MDB -e 'show tables' | $AWK '{ print $1}' | $GREP -v '^Tables' )
 
 #$MYSQL -h 127.0.0.1 -P 8888 -u $MUSER -p$MPASS $MDB -e ""
-$MYSQL -h $MHOST -P $MPORT -u $MUSER -p$MPASS $MDB -e "SET FOREIGN_KEY_CHECKS = 0;"
 for t in $TABLES
 do
     echo $t
     #echo "Deleting $t table from $MDB database..."
-    $MYSQL -h $MHOST -P $MPORT -u $MUSER -p$MPASS $MDB -e "DROP TABLE $t"
+    $MYSQL -h $MHOST -P $MPORT -u $MUSER -p$MPASS $MDB -e "SET FOREIGN_KEY_CHECKS=0; DROP TABLE $t;"
 done
 $MYSQL -h $MHOST -P $MPORT -u $MUSER -p$MPASS $MDB -e "DROP FUNCTION distance_on_sky;"
 
