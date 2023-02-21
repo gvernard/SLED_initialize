@@ -17,7 +17,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 django.setup()
 
 
-from django.test import Client
 from lenses.models import Catalogue, Instrument, Band, Users, Lenses
 
 sys.path.append('../add_data/')
