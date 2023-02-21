@@ -10,6 +10,8 @@ import base64
 import os
 import sys
 import django
+sys.path.append('../../SLED_api/')
+
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 django.setup()
@@ -29,12 +31,11 @@ c.login(username='admin', password='123')
 
 #image_files = []
 csvs = np.sort(glob.glob(csv_dir+'*.csv'))
-
-
+#csvs = csvs[171:]
 allupdates = []
 for eachcsv in csvs:
-
     lens_dicts = []
+    
     data = pd.read_csv(eachcsv, skipinitialspace=True)
 
     #this deals with nans where you have empty entries
@@ -42,6 +43,7 @@ for eachcsv in csvs:
 
     #loop through each lens in the paper csv
     for i in range(len(data)):
+        
         lens_dict = data.iloc[i].to_dict()
 
         if lens_dict['imagename']=='':
@@ -83,7 +85,6 @@ for eachcsv in csvs:
                                 value = []
                         if value!=dblens[field]:
                             send_update = True
-                            print(field)
                             print('new value', value)
                             print('old value', dblens[field])
                             if field=='name':
@@ -93,6 +94,8 @@ for eachcsv in csvs:
                                     #if answer.lower()=='y':
                                     if 1==1:
                                         oldname = dblens['name']
+                                        if ' ' in oldname:
+                                            oldname = oldname.split(' ')[-1]
                                         for i, character in enumerate(oldname):
                                             if character.isdigit():
                                                 break
@@ -125,10 +128,16 @@ for eachcsv in csvs:
     if r.status_code==200:
         print("Upload completed successfully!")
     else:
-        print(r.text)
+        print(r.content)
         if 'duplicates' in r.text:
             print("Something went wrong!")
             wait = input()
             print('d///f')
-    
+
+#do all updates at once
 r  = c.post('/api/update-lens/', data=allupdates, content_type="application/json")
+if r.status_code==200:
+    print("Upload completed successfully!")
+else:
+    print(r.content)
+    df

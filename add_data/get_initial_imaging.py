@@ -23,6 +23,9 @@ import legacysurvey_utils
 import imaging_utils
 import database_utils
 
+Nstart = int(sys.argv[2])
+Nend = int(sys.argv[3])
+
 
 
 outpath='../../initialize_database_data/images_to_upload/'
@@ -51,6 +54,8 @@ for kk in range(len(surveys)):
     survey, bands, instrument = surveys[kk], bandss[kk], instruments[kk]
     #for i in range(0, 50):
     for kk, lens in enumerate(lenses): 
+        if (kk<Nstart) or (kk>Nend):
+            continue
         print(kk, '/',len(lenses), ':', lens.name)
         uploads = []
         name, ra, dec = lens.name, float(lens.ra), float(lens.dec)
@@ -68,7 +73,9 @@ for kk in range(len(surveys)):
                 elif survey=='LegacySurveyNorth':
                     datafile = legacysurvey_utils.legacysurvey_data(name, ra, dec, band, layer='ls-dr9-north', outpath=jsonpath, size=10, verbose=verbose)
                 
-
+                if datafile==0:
+                    continue
+                    
                 #if the data exists, create the json and image for upload
                 if datafile is not None:
                     if survey=='PanSTARRS':
@@ -79,6 +86,9 @@ for kk in range(len(surveys)):
                         jsonfile = legacysurvey_utils.legacy_survey_layer_band_image_and_json(name, ra, dec, band, layer='ls-dr9-north', jsonpath=jsonpath, imagepath=imagepath, size=10)
                     
 
-                    f = open(jsonfile)
-                    uploadjson = json.load(f)
-                    f.close()
+                    #f = open(jsonfile)
+                    #uploadjson = json.load(f)
+                    #f.close()
+
+                else:
+                    uploadjson = imaging_utils.checked_and_nodata_json(jsonfile, name, ra, dec, band, instrument=instrument)
