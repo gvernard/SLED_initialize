@@ -21,7 +21,7 @@ then
 	file_source="FILES_TEST"
     else
 	read -p "DANGER: deleting PRODUCTION database files - are you sure? " -n 1 -r reply
-	echo "\n"
+	echo -e "\n"
 	if [[ $reply =~ ^[Yy]$ ]]
 	then
 	    file_source="FILES"

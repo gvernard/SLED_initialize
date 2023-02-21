@@ -21,6 +21,7 @@ then
     read -p "DANGER: deleting PRODUCTION database tables - are you sure? (Y/y=yes)" -n 1 -r reply
     if [[ $reply =~ ^[Yy]$ ]]
     then
+	echo -e "\n"
 	echo "Using PRODUCTION Mysql DB server..."
 	echo "Dropping all tables"
 	bash drop_all_tables.sh ${spd}/launch_server/server_root.cnf
