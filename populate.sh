@@ -29,7 +29,6 @@ then
     export DJANGO_EMAIL_PASSWORD=`cat ${spd}/launch_server/email_password.txt`   
 fi
 
-
 echo "Adding users..."
 python ${spd}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
 echo "Adding users...OK"

@@ -42,16 +42,11 @@
     "base_types":"Imaging"
     },
     {
-    "name": "HSC (DR2)",
-    "extended_name": "Subaru - Hyper Suprime Cam Survey second data rleease",
-    "info": "",
-    "base_types":"Imaging"
-    },
-    {
     "name": "SDSS-spec",
     "extended_name": "The first of the SDSS spectrographs (before BOSS)",
     "info": "",
     "base_types":"Spectrum"
-    },
+    }
+
 
 ]

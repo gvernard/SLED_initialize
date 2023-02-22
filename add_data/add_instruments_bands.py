@@ -1,6 +1,7 @@
 import sys
 import os
 import django
+import numpy as np
 
 os.environ['DJANGO_SETTINGS_MODULE'] = "mysite.settings"
 django.setup()

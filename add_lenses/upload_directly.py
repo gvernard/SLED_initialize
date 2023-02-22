@@ -12,7 +12,7 @@ import sys
 import django
 import socket
 
-
+sys.path.append('../../SLED_api/')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 django.setup()
 
@@ -21,12 +21,16 @@ from lenses.models import Catalogue, Instrument, Band, Users, Lenses
 
 import glob
 
+print('uploading lenses asfijdajsdnasjidknaskj')
+
 
 # Specify the directory where the mugshot for each lens is found
 mugshot_dir = "../../initialize_database_data/images_to_upload/initial_mugshots/"
 csv_dir = "../../initialize_database_data/add_lenses_csvs/"
 
 hostname = socket.gethostbyname(socket.gethostname())
+
+print(hostname)
 c = Client(SERVER_NAME=hostname)
 c.login(username='admin', password='123')
 
