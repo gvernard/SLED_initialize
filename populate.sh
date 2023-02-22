@@ -13,6 +13,11 @@ echo $spd
 echo $dir
 
 
+# Check host name - needed for calls to the API by the upload scripts
+host_ip=`python -c 'import socket; print(socket.gethostbyname(socket.gethostname()))'`
+echo "Host IP is: " $host_ip
+
+
 # Activate SLED environment
 eval "$(conda shell.bash hook)"
 if [ `hostname -s` = "django01" ]
