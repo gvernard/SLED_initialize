@@ -50,6 +50,8 @@ for jsonfile in spectra:
     
     if uploadjson['exists']:
         uploadjson['image'] = imagepath + os.path.basename(uploadjson['image'])
+        uploadjson['lambda_min'] = uploadjson['lambda_min']/10.
+        uploadjson['lambda_max'] = uploadjson['lambda_max']/10.
 
     uploads.append(uploadjson)
 

@@ -50,6 +50,8 @@ bands += bands2
 wavelengths += wavelengths2
 infos += infos2
 
+wavelengths = np.array(wavelengths)/10.
+
 final_bands, _, _, N = np.unique(np.array(bands), True, True, True)
 for i in range(len(final_bands)):
     k = np.where(np.array(bands)==final_bands[i])[0]
