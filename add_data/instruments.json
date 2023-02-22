@@ -53,13 +53,5 @@
     "info": "",
     "base_types":"Spectrum"
     },
-    {
-    "name": "BOSS-spec",
-    "extended_name": "The BOSS spectrograph",
-    "info": "",
-    "base_types":"Spectrum"
-    }
-
-
 
 ]

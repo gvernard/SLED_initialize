@@ -47,40 +47,13 @@ for kk in range(len(instruments)):
     uploads = []
     survey, instrument = surveys[kk], instruments[kk]
     uploads = []
-    if check_all:
-        for ii in range(len(lenses)):
-            lens = lenses[ii]
-            print(ii, '/',len(lenses), ':', lens.name)
-            
-            name, ra, dec = lens.name, float(lens.ra), float(lens.dec)
-        
-            filtered_results = hst_utils.best_hst(ra, dec, datemin='1988-01-01T00:00:00.000', datemax='2023-02-14T00:00:00.000', one_instrument=instrument)
-            if filtered_results:
-                for j in range(len(filtered_results)):
-                    instr, filt = filtered_results['instrument_name'][j], filtered_results['energy_bandpassName'][j]
-                    filename = name+'_'+survey+'_'+instrument+'_'+filt
-                    if not os.path.exists(filename+'.json'):
-                        image, pixscale, url = hst_utils.download_cutouts_HLA(observation=filtered_results[[j]], savedir=imagepath, savename=filename+'.jpg', ra=ra, dec=dec, size=10)
-                        print(name, instr, filt)
-                        if image:
-                            uploadjson = hst_utils.construct_json(observation=filtered_results[[j]], pixscale=pixscale, imagename=imagepath+filename+'.jpg', ra=ra, dec=dec, url=url)
-                            outfile = open(jsonpath+filename+'.json', 'w')
-                            json.dump(uploadjson, outfile)
-                            outfile.close()
-                            uploads.append(uploadjson)
-                    else:
-                        f = open(jsonpath+filename+'.json')
-                        uploadjson = json.load(f)
-                        f.close()
-                        uploads.append(uploadjson)
 
-    else:
-        jsons = glob.glob(jsonpath+'*'+survey+'_'+instrument+'_*.json')
-        for js in jsons:
-            f = open(js)
-            uploadjson = json.load(f)
-            f.close()
-            uploads.append(uploadjson)
+    jsons = glob.glob(jsonpath+'*'+survey+'_'+instrument+'_*.json')
+    for js in jsons:
+        f = open(js)
+        uploadjson = json.load(f)
+        f.close()
+        uploads.append(uploadjson)
 
     print('Uploading to database for', survey, instrument)
     upload = database_utils.upload_imaging_to_db_direct(datalist=uploads, username=username)

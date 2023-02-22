@@ -37,6 +37,7 @@ fi
 
 # Check that spd is consistent with 'sled' and 'sled_test' directories on django01
 if [ `hostname -s` == "django01" ]
+then
    spd_name=$(basename $spd)
    if [ $database = "test" ] && [ $spd_name != "sled_test" ]
    then

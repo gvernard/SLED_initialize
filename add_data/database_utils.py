@@ -90,8 +90,8 @@ def upload_imaging_to_db_direct(datalist, username):
 
         finaldata['instrument'] = Instrument.objects.get(name=data['instrument'])
 
-        if data['band'] not in list(Band.objects.all().values_list('name', flat=True).distinct()):
-            create_band(data['band'])
+        #if data['band'] not in list(Band.objects.all().values_list('name', flat=True).distinct()):
+        #    create_band(data['band'])
 
         finaldata['band'] = Band.objects.get(name=data['band'])
 
@@ -176,7 +176,7 @@ def upload_spectrum_to_db_direct(datalist, username):
     return 0
 
 
-def create_band(bandname):
+'''def create_band(bandname):
 
     #WFC3 bands
     bands = ['F098M', 'G102', 'F105W', 'F110W', 'F125W', 'F126N', 'F127M', 'F128N', 'F130N', 'F132N', 'F139M', 'F140W', 'G141', 'F153M', 'F160W', 'F218W', 'FQ232N', 'F225W', 'FQ243N', 'F275W', 'F280N', 'F300X', 'F336W', 'F343N', 'F373N', 'FQ378N', 'FQ387N', 'F390M', 'F395N', 'F390W', 'F410M', 'FQ422M', 'F438W', 'FQ436N', 'FQ437N', 'F467M', 'F469N', 'G280', 'F475W', 'F487N', 'FQ492N', 'F502N', 'F475X', 'FQ508N', 'F555W', 'F547M', 'FQ575N', 'F606W', 'F200LP', 'FQ619N', 'F621M', 'F625W', 'F631N', 'FQ634N', 'F645N', 'F350LP', 'F656N', 'F657N', 'F658N', 'F665N', 'FQ672N', 'FQ674N', 'F673N', 'F680N', 'F689M', 'FQ727N', 'FQ750N', 'F763M', 'F600LP', 'F775W', 'F814W', 'F845M', 'FQ889N', 'FQ906N', 'F850LP', 'FQ924N', 'FQ937N', 'F953N']
@@ -195,7 +195,7 @@ def create_band(bandname):
 
     b = Band(name=bandname, info='', wavelength=wavelength)
     b.save()
-    return 0
+    return 0'''
 
 
 
