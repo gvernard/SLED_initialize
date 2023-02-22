@@ -49,6 +49,7 @@ for kk in range(len(instruments)):
     uploads = []
 
     jsons = glob.glob(jsonpath+'*'+survey+'_'+instrument+'_*.json')
+
     for js in jsons:
         f = open(js)
         uploadjson = json.load(f)

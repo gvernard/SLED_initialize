@@ -54,6 +54,8 @@ cd ${dir}/add_data
 python upload_initial_HST_imaging.py ${spd}/SLED_api > ../report_add_HST_imaging.txt
 echo "Adding HST imaging data...OK"
 
+
+<<comment
 echo "Adding imaging data..."
 cd ${dir}/add_data
 python upload_initial_imaging.py ${spd}/SLED_api > ../report_add_imaging.txt
@@ -78,3 +80,4 @@ echo "Adding papers..."
 cd ${dir}/add_papers
 python ${spd}/SLED_api/manage.py shell < upload_papers_API.py > ../report_add_papers.txt
 echo "Adding papers...OK"
+comment

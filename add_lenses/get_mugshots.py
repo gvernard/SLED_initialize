@@ -6,8 +6,7 @@ import cv2
 import base64
 import os
 import sys
-<<<<<<< HEAD
-=======
+
 import django
 
 sys.path.append('../../SLED_api/')
@@ -17,7 +16,6 @@ django.setup()
 
 
 from lenses.models import Catalogue, Instrument, Band, Users, Lenses
->>>>>>> eeb4353ef44e29182179a69af6609ea813ad3a15
 
 sys.path.append('../add_data/')
 import panstarrs_utils

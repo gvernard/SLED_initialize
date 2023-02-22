@@ -10,12 +10,8 @@ import base64
 import os
 import sys
 import django
-<<<<<<< HEAD
-sys.path.append('../../SLED_api/')
-
-=======
 import socket
->>>>>>> eeb4353ef44e29182179a69af6609ea813ad3a15
+
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 django.setup()
