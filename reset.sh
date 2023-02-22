@@ -13,26 +13,43 @@ host=$2
 spd=${3%/} # This has to be the SLED project dir, i.e. the directory containing SLED_api
 
 
+
+# Resetting the server can occur only on django01
 if [ $host = "server" ] && [ `hostname -s` != "django01" ]
 then
     echo "The host option is server but the actual host is not django01!"
     exit 0    
 fi
-    
 
+# Resetting the sqlite database can occur only on the localhost
 if [ $database = "sqlite" ] && [ $host = "server" ]
 then
     echo "The sqlite database can be used only locally, i.e. not on django01"
     exit 0
 fi
+
+# Resetting any of the MySQL databases can occur only on the django server
 if ([ $database = "test" ] || [ $database = "production" ]) && [ `hostname -s` != "django01" ]
 then
     echo "The test or production database has to be used on django01!"
     exit 0
 fi
 
-
 # Check that spd is consistent with 'sled' and 'sled_test' directories on django01
+if [ `hostname -s` == "django01" ]
+   spd_name=$(basename $spd)
+   if [ $database = "test" ] && [ $spd_name != "sled_test" ]
+   then
+       echo "You are using the 'test' database and the production path!"
+       exit 0    
+   fi
+   if [ $database = "production" ] && [ $spd_name != "sled" ]
+   then
+       echo "You are using the 'production' database and the test path!"
+       exit 0    
+   fi
+fi
+
 
 
 
