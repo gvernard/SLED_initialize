@@ -43,10 +43,5 @@
     "name": "Y",
     "info": "Pan-STARRS",
     "wavelength": 962
-    },
-    {
-	"name": "F814W",
-	"info": "HST F814W",
-    "wavelength": 803.91
     }
 ]

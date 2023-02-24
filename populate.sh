@@ -34,7 +34,6 @@ then
     export DJANGO_EMAIL_PASSWORD=`cat ${spd}/launch_server/email_password.txt`   
 fi
 
-
 echo "Adding users..."
 python ${spd}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
 echo "Adding users...OK"
@@ -59,17 +58,16 @@ cd ${dir}/add_data
 python upload_initial_HST_imaging.py ${spd}/SLED_api > ../report_add_HST_imaging.txt
 echo "Adding HST imaging data...OK"
 
+echo "Adding spectra..."
+cd ${dir}/add_data
+python upload_initial_spectra.py ${spd}/SLED_api > ../report_add_spectra.txt
+echo "Adding spectra...OK"
 
 <<comment
 echo "Adding imaging data..."
 cd ${dir}/add_data
 python upload_initial_imaging.py ${spd}/SLED_api > ../report_add_imaging.txt
 echo "Adding imaging data...OK"
-
-echo "Adding spectra..."
-cd ${dir}/add_data
-python upload_initial_spectra.py ${spd}/SLED_api > ../report_add_spectra.txt
-echo "Adding spectra...OK"
 
 echo "Adding catalogue data..."
 cd ${dir}/add_data

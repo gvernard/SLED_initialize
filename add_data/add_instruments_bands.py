@@ -1,6 +1,7 @@
 import sys
 import os
 import django
+import numpy as np
 
 os.environ['DJANGO_SETTINGS_MODULE'] = "mysite.settings"
 django.setup()
@@ -48,6 +49,8 @@ infos2 = ['ACS' for band in bands2]
 bands += bands2
 wavelengths += wavelengths2
 infos += infos2
+
+wavelengths = np.array(wavelengths)/10.
 
 final_bands, _, _, N = np.unique(np.array(bands), True, True, True)
 for i in range(len(final_bands)):
