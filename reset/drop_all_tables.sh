@@ -31,3 +31,4 @@ $MYSQL -h $MHOST -P $MPORT -u $MUSER -p$MPASS $MDB -e "DROP FUNCTION distance_on
 $MYSQL -h $MHOST -P $MPORT -u $MUSER -p$MPASS $MDB -e "ALTER DATABASE $MDB CHARACTER SET utf8 COLLATE utf8_bin;"
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 $MYSQL -h $MHOST -P $MPORT -u $MUSER -p$MPASS $MDB < $SCRIPTPATH/function_distance_on_sky.sql
+$MYSQL -h $MHOST -P $MPORT -u $MUSER -p$MPASS $MDB -e "GRANT EXECUTE ON FUNCTION strong_lenses_database.distance_on_sky TO 'sled_rw'@'10.25.64.150';"
