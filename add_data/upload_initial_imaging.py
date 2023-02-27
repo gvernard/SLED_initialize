@@ -64,7 +64,7 @@ for kk in range(len(surveys)):
 
 
         uploads.append(uploadjson)
-        print(len(uploads))
+    print(len(uploads))
     print('Uploading to database')
     upload = database_utils.upload_imaging_to_db_direct(datalist=uploads, username=username)
     #else:
