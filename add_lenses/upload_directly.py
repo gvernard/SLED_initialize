@@ -39,6 +39,7 @@ csvs = np.sort(glob.glob(csv_dir+'*.csv'))
 #csvs = csvs[171:]
 allupdates = []
 for eachcsv in csvs:
+    print(eachcsv)
     lens_dicts = []
     
     data = pd.read_csv(eachcsv, skipinitialspace=True)
@@ -60,7 +61,7 @@ for eachcsv in csvs:
 
         #CHECK IF LENS ALREADY EXISTS
         user = Users.objects.get(username='admin')
-        lensdata = {'ra':lens_dict['ra'], 'dec':lens_dict['dec'], 'radius':10., 'user':user}
+        lensdata = {'ra':lens_dict['ra'], 'dec':lens_dict['dec'], 'radius':5., 'user':user}
         r  = c.post('/api/query-lenses/', data=lensdata)
 
         dbquery = json.loads(r.content)
@@ -69,6 +70,9 @@ for eachcsv in csvs:
         if len(dblenses)>0:
             dblens = dblenses[0]
 
+            #no updates for a confirmed lens
+            if dblens['flag_confirmed']:
+                continue
             update_data = {'ra':dblens['ra'], 'dec':dblens['dec']}
             send_update = False
 
@@ -94,31 +98,25 @@ for eachcsv in csvs:
                             print('old value', dblens[field])
                             if field=='name':
                                 if lens_dict['flag_discovery']:
-                                    #print('Would you like to add this name and the current name to the alternative names list? And change the name to J...')
-                                    #answer = input()
-                                    #if answer.lower()=='y':
-                                    if 1==1:
-                                        oldname = dblens['name']
-                                        if ' ' in oldname:
-                                            oldname = oldname.split(' ')[-1]
-                                        for i, character in enumerate(oldname):
-                                            if character.isdigit():
-                                                break
-                                        newname = 'J'+oldname[i:]
-                                        if dblens['alt_name']:
-                                            altname = dblens['alt_name']+', '+oldname
-                                        else:
-                                            altname = oldname+', '+lens_dict['name']
+                                    oldname = dblens['name']
+                                    for i, character in enumerate(oldname):
+                                        if character.isdigit():
+                                            break
+                                    newname = 'J'+oldname[i:]
+                                    if dblens['alt_name']:
+                                        altname = dblens['alt_name']+', '+oldname
+                                    else:
+                                        altname = oldname+', '+lens_dict['name']
 
-                                        update_data['name'] = newname
-                                        update_data['alt_name'] = altname
+                                    update_data['name'] = newname
+                                    update_data['alt_name'] = altname
                             else:
                                 update_data[field] = lens_dict[field]
                                 
 
             if send_update:
+                print(dblens['name'])
                 allupdates.append(update_data)
-
         else:
             lens_dicts.append(lens_dict)
 
@@ -139,7 +137,6 @@ for eachcsv in csvs:
             wait = input()
             print('d///f')
 
-#do all updates at once
 r  = c.post('/api/update-lens/', data=allupdates, content_type="application/json")
 if r.status_code==200:
     print("Upload completed successfully!")

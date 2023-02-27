@@ -33,6 +33,7 @@ def return_photometry_json(json_outname, ra, dec, band, phot, instrument):
     upload_json['exists'] = True
     if np.isnan(float(phot[band+'mag'])):
         upload_json['mag'] = None
+        upload_json['exists'] = False
     else:
         upload_json['mag'] = float('{0:.3f}'.format(phot[band+'mag']))
 
@@ -40,7 +41,9 @@ def return_photometry_json(json_outname, ra, dec, band, phot, instrument):
         upload_json['Dmag'] = None
     else:
         upload_json['Dmag'] = float('{0:.3f}'.format(phot['e_'+band+'mag']))
-    upload_json['distance'] = float('{0:.3f}'.format(3600.*(((phot['RA_ICRS']-ra)*np.cos(dec*np.pi/180.))**2. + (phot['DE_ICRS']-dec)**2.)**0.5))
+
+    if upload_json['exists']:
+        upload_json['distance'] = float('{0:.3f}'.format(3600.*(((phot['RA_ICRS']-ra)*np.cos(dec*np.pi/180.))**2. + (phot['DE_ICRS']-dec)**2.)**0.5))
 
     outfile = open(json_outname, 'w')
     json.dump(upload_json, outfile)

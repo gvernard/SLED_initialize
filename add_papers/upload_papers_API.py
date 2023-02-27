@@ -31,8 +31,11 @@ json_dir = "../../initialize_database_data/add_papers_csvs/"
 
 #image_files = []
 jsons = np.sort(glob.glob(json_dir+'*.json'))
-
-for eachjson in jsons:
+#jsons = jsons[200:]
+for i, eachjson in enumerate(jsons):
+    print(i, eachjson)
+    #if i<191:
+    #    continue
 
     f = open(eachjson)
     data = json.load(f)

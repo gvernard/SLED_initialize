@@ -23,6 +23,8 @@ from api.serializers import ImagingDataUploadSerializer
 import spectrum_utils
 import database_utils
 
+Nstart = int(sys.argv[2])
+Nend = int(sys.argv[3])
 
 #name, ra, dec = 'SDSSJ0246-0825', 41.6420, -8.4267
 outpath = '../../initialize_database_data/images_to_upload/'
@@ -30,9 +32,6 @@ jsonpath = outpath+'jsons/'
 imagepath = outpath+'images/'
 verbose = True
 
-upload_again = True
-attempt_download = True
-direct_upload = True
 username, password = 'admin', '123'
 
 survey = 'SDSS DR16'
@@ -43,44 +42,31 @@ lenses = Lenses.objects.all()
 
 #for i in range(0, 50):
 for kk, lens in enumerate(lenses): 
-    uploads = []
+    if (kk<Nstart) or (kk>Nend):
+        continue
     print(kk, len(lenses))
     name, ra, dec = lens.name, float(lens.ra), float(lens.dec)
 
-    print('checking for spectra')
-    if offline:
-        spectra = glob.glob(jsonpath+name+'_SDSSDR16_*.json')
-        if spectra is not None:
-            specids = [spec.split('_')[-1][:-5] for spec in spectra]
+
+    spectra = glob.glob(jsonpath+name+'_SDSSDR1*.json')
+    print(spectra)
+    if len(spectra)>1:
+        print('MAYBE A PROBLEM')
+    if len(spectra)>0:
+        #specids = [spec.split('_')[-1][:-5] for spec in spectra]
+        continue
+
+
+
     else:
         spectra = spectrum_utils.query_vizier_sdss_dr16(ra, dec, radius=5.)
         if spectra is not None:
             specids = spectra['Sp-ID']
     has_valid_spectrum = False
     if spectra is not None:
-        if verbose:
-            print('SDSS DR16 spectrum found for', name, ra, dec)
         for specnum, spec in enumerate(spectra):
             jsonfile = jsonpath+name+'_SDSSDR16_'+specids[specnum]+'.json'
-            
-            #if the json already exists, then no need to remake things
-            if upload_again & os.path.exists(jsonfile):
-
-                f = open(jsonfile)
-                uploadjson = json.load(f)
-                f.close()
-                
-                if uploadjson['exists']:
-                    has_valid_spectrum = True
-                    uploadjson['image'] = imagepath + os.path.basename(uploadjson['image'])
-
-                if (not direct_upload) & uploadjson['exists']:
-                    uploads.append(uploadjson)
-
-                elif direct_upload:
-                    uploads.append(uploadjson)
-
-            if (not os.path.exists(jsonfile)) & attempt_download:
+            if not os.path.exists(jsonfile):
                 #check flag to see if spectrum was unplugged
                 flag = spec['f_zsp']
                 if "{:08d}".format(int(format(flag, 'b')))[-8]=='1':
@@ -95,8 +81,10 @@ for kk, lens in enumerate(lenses):
                 spectrum_utils.download_spectrum(spid, fits_outname=jsonpath+fits_outname)
                 spectrum_utils.make_cutout(fits_outname=jsonpath+fits_outname, jpg_outname=imagepath+jpg_outname, title_string=title_string)
                 upload_json = spectrum_utils.get_upload_json(ra='{0:.4f}'.format(ra), dec='{0:.4f}'.format(dec), jpg_outname=imagepath+jpg_outname, json_outname=jsonfile, fits_outname=jsonpath+fits_outname, spec_table=spec)
-                
-                uploads.append(upload_json)
+                has_valid_spectrum = True
+
+
+
     if not has_valid_spectrum:
         jsonfile = jsonpath+name+'_SDSSDR16.json'
         if not os.path.exists(jsonfile):
@@ -104,17 +92,3 @@ for kk, lens in enumerate(lenses):
                 print('No SDSS spectrum found for', name)
                 print('Creating JSON to store as a negative result')        
             upload_json = spectrum_utils.checked_and_nodata_json(json_outname=jsonfile, ra=ra, dec=dec, instrument='SDSS-spec')
-            if direct_upload:
-                uploads.append(upload_json)
-        if os.path.exists(jsonfile) & upload_again:
-            f = open(jsonfile)
-            upload_json = json.load(f)
-            f.close()
-            if direct_upload:
-                uploads.append(upload_json)
-
-    if len(uploads)>0:
-        if direct_upload:
-            upload = database_utils.upload_spectrum_to_db_direct(datalist=uploads, username=username)
-        else:
-            upload = database_utils.upload_data_to_db_API(uploads, 'Spectrum', username, password)

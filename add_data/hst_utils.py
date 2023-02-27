@@ -118,8 +118,8 @@ def best_hst(ra, dec, datemin='1981-01-01T00:00:00.000', datemax='2022-01-01T00:
             for filtoption in filtoptions:
                 print(filtoption)
                 if filtoption[0]=='F':
-                    print('overwriting')
-                    final_filts.append(filtoption)
+                    bestfilt = filtoption
+            final_filts.append(bestfilt)
         else:
             final_filts.append(filt)
 

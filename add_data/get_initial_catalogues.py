@@ -25,15 +25,14 @@ import imaging_utils
 import database_utils
 import gaia_utils 
 
+Nstart = int(sys.argv[2])
+Nend = int(sys.argv[3])
 
 
 outpath='../../initialize_database_data/images_to_upload/jsons/'
 
 verbose = False
 
-upload_again = True
-attempt_download = True
-direct_upload = True
 username, password = 'admin', '123'
 
 #data = Table.read('../trial_sample/lensed_quasars_uploadtable.fits')]
@@ -49,24 +48,19 @@ for kk in range(len(surveys)):
     survey, bands, instrument = surveys[kk], bandss[kk], instruments[kk]
     
     for i in range(len(lenses)):
-
+        print(i)
+        if (i<Nstart) or (i>Nend):
+            continue
         lens = lenses[i]
         name, ra, dec = lens.name, float(lens.ra), float(lens.dec)
+        print(name, ra, dec)
         for band in bands:
             jsonfile = outpath+name+'_'+survey+'_'+band+'_photometry1.json'
-            if upload_again & os.path.exists(jsonfile):
-                if verbose:
-                    print('A json file and the associated photometry already exist for', jsonfile,  ', uploading to database')
+            if os.path.exists(jsonfile):
+                    print('files already found')
+                    continue
 
-                files = glob.glob(outpath+name+'_'+survey+'_'+band+'_photometry*')
-                if verbose:
-                    print(len(files), ' separate files were found')
-                for file in files:
-                    f = open(file)
-                    uploadjson = json.load(f)
-                    f.close()
-
-            if (not os.path.exists(jsonfile)) & attempt_download:
+            if not os.path.exists(jsonfile):
                 if verbose:
                     print('checking for ', survey,' data in', band)
                 #download the PanSTARRS data
@@ -82,7 +76,6 @@ for kk in range(len(surveys)):
                 #if the data exists, create the json and image for upload
                 if datafile is not None:
                     for k, phot in enumerate(datafile):
-                        print(name, ra, dec, k)
                         jsonname = outpath+name+'_'+survey+'_'+band+'_photometry'+str(k+1)+'.json'
                         if survey=='PanSTARRS':
                             uploadjson = panstarrs_utils.return_photometry_json(json_outname=jsonname, ra=ra, dec=dec, band=band, phot=phot)
@@ -92,7 +85,7 @@ for kk in range(len(surveys)):
 
 
                 #if the data does not exist, then upload an exists=False json so we know not to try again (DIRECT ONLY)
-                if (datafile is None) & direct_upload:
+                if datafile is None:
                     if survey=='PanSTARRS':
                         uploadjson = panstarrs_utils.return_empty_photometry_json(json_outname=jsonfile, ra=ra, dec=dec, band=band)
                     if survey=='Gaia-DR1':

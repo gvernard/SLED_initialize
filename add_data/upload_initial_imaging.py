@@ -53,7 +53,8 @@ for kk in range(len(surveys)):
     survey, bands, instrument = surveys[kk], bandss[kk], instruments[kk]
     uploads = []
     jsonfiles = list(set(glob.glob(jsonpath+'*_'+survey+'_*.json')) - set(glob.glob(jsonpath+'*_'+survey+'_*hotom*.json')))
-    for jsonfile in jsonfiles:
+    for i, jsonfile in enumerate(jsonfiles):
+        #print(i)
         f = open(jsonfile)
         uploadjson = json.load(f)
         f.close()
@@ -63,7 +64,7 @@ for kk in range(len(surveys)):
 
 
         uploads.append(uploadjson)
-
+        print(len(uploads))
     print('Uploading to database')
     upload = database_utils.upload_imaging_to_db_direct(datalist=uploads, username=username)
     #else:

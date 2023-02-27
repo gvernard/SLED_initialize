@@ -49,12 +49,15 @@ for kk in range(len(instruments)):
     uploads = []
 
     jsons = glob.glob(jsonpath+'*'+survey+'_'+instrument+'_*.json')
-
+    allbands = []
     for js in jsons:
         f = open(js)
         uploadjson = json.load(f)
         f.close()
         uploads.append(uploadjson)
+        allbands.append(uploadjson['band'])
+        if uploadjson['band']=='clear':
+            print(js)
 
     print('Uploading to database for', survey, instrument)
     upload = database_utils.upload_imaging_to_db_direct(datalist=uploads, username=username)

@@ -72,6 +72,7 @@ for kk in range(len(surveys)):
                     datafile = legacysurvey_utils.legacysurvey_data(name, ra, dec, band, layer='ls-dr9-south', outpath=jsonpath, size=10, verbose=verbose)
                 elif survey=='LegacySurveyNorth':
                     datafile = legacysurvey_utils.legacysurvey_data(name, ra, dec, band, layer='ls-dr9-north', outpath=jsonpath, size=10, verbose=verbose)
+                    print('datafile', datafile)
                 
                 if datafile==0:
                     continue

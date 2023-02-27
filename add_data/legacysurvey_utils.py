@@ -50,7 +50,9 @@ def save_single_band_layer(fits_outname, ra, dec, size=10, band='g', layer='ls-d
     r = requests.get(url)
     #if r.status_code==500:
     #    return None
-    if r.status_code!=200:
+    if r.status_code==500:
+        return None
+    if r.status_code != 200:
         return 0
     open(fits_outname,"wb").write(r.content)
     data = fits.open(fits_outname)[0].data

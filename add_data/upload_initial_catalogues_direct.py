@@ -47,7 +47,7 @@ for kk in range(len(surveys)):
     files = glob.glob(outpath+'*_'+survey+'*_photometry*')
     uploads = []
     for i, file in enumerate(files):
-        print(i)
+        print(i, len(files))
         f = open(file)
         uploadjson = json.load(f)
         f.close()
