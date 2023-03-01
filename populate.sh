@@ -32,6 +32,7 @@ if [ `hostname -s` == "django01" ]
 then
     export DJANGO_SECRET_KEY=`cat ${spd}/launch_server/secret_key.txt`
     export DJANGO_EMAIL_PASSWORD=`cat ${spd}/launch_server/email_password.txt`   
+    export DJANGO_DOMAIN_NAME=sled.astro.unige.ch
 fi
 
 
