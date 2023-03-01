@@ -35,18 +35,6 @@ then
 fi
 
 
-echo "Adding HST imaging data..."
-cd ${dir}/add_data
-python upload_initial_HST_imaging.py ${spd}/SLED_api > ../report_add_HST_imaging.txt
-echo "Adding HST imaging data...OK"
-
-echo "Adding imaging data..."
-cd ${dir}/add_data
-python upload_initial_imaging.py ${spd}/SLED_api > ../report_add_imaging.txt
-echo "Adding imaging data...OK"
-
-
-<<comment
 echo "Adding users..."
 python ${spd}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
 echo "Adding users...OK"
@@ -84,14 +72,21 @@ python ${spd}/SLED_api/manage.py shell < upload_papers_API.py > ../report_add_pa
 echo "Adding papers...OK"
 
 
-
-
 echo "Adding catalogue data..."
 cd ${dir}/add_data
 python upload_initial_catalogues_direct.py ${spd}/SLED_api > ../report_add_catalogues.txt
 echo "Adding catalogue data...OK"
 
 
+echo "Adding HST imaging data..."
+cd ${dir}/add_data
+python upload_initial_HST_imaging.py ${spd}/SLED_api > ../report_add_HST_imaging.txt
+echo "Adding HST imaging data...OK"
 
+echo "Adding imaging data..."
+cd ${dir}/add_data
+python upload_initial_imaging.py ${spd}/SLED_api > ../report_add_imaging.txt
+echo "Adding imaging data...OK"
 
+<<comment
 comment
