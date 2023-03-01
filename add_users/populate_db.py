@@ -1,6 +1,7 @@
 import sys
 import os
 import django
+from django.contrib.sites.models import Site
 from astropy import units as u
 from astropy.coordinates import SkyCoord
 import numpy as np
@@ -15,6 +16,16 @@ django.setup()
 from lenses.models import Users, SledGroup, Lenses, SingleObject
 from django.forms.models import model_to_dict
 from guardian.shortcuts import assign_perm
+
+
+
+
+mysite = = Site.objects.all()[0]
+mysite.domain = os.environ.get('DJANGO_DOMAIN_NAME',example.com)
+mysite.name = 'Strong Lenses Database'
+mysite.save()
+
+
 
 password = '123'
 
