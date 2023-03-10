@@ -88,3 +88,9 @@ echo "Adding imaging data..."
 cd ${dir}/add_data
 python upload_initial_imaging.py ${spd}/SLED_api > ../report_add_imaging.txt
 echo "Adding imaging data...OK"
+
+
+echo "Adding imaging data..."
+cd ${dir}/
+python ${spd}/SLED_api/manage.py shell < delete_notifications.py
+echo "Adding imaging data...OK"
