@@ -132,10 +132,13 @@ for eachcsv in csvs:
         print("Upload completed successfully!")
     else:
         print(r.content)
-        if 'duplicates' in r.text:
-            print("Something went wrong!")
-            wait = input()
-            print('d///f')
+        if 'text' in r:
+            if 'duplicates' in r.text:
+                print("Something went wrong!")
+                wait = input()
+                print('d///f')
+        else:
+                print("Something went wrong!")
 
 r  = c.post('/api/update-lens/', data=allupdates, content_type="application/json")
 if r.status_code==200:

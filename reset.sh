@@ -21,6 +21,8 @@ then
     exit 0    
 fi
 
+
+
 # Resetting the sqlite database can occur only on the localhost
 if [ $database = "sqlite" ] && [ $host = "server" ]
 then
@@ -28,12 +30,16 @@ then
     exit 0
 fi
 
+
+
 # Resetting any of the MySQL databases can occur only on the django server
 if ([ $database = "test" ] || [ $database = "production" ]) && [ `hostname -s` != "django01" ]
 then
     echo "The test or production database has to be used on django01!"
     exit 0
 fi
+
+
 
 # Check that spd is consistent with 'sled' and 'sled_test' directories on django01
 if [ `hostname -s` == "django01" ]
@@ -74,7 +80,9 @@ then
 else
     if [ $database = "test" ]
     then
-	cp ${spd}/launch_server/settings_server_test.py ${spd}/SLED_api/mysite/settings.py
+	export DJANGO_SECRET_KEY='django-insecure-3#$_(o_0g=w68gw@y5anq4$yb2$b!&1_@+bk%jse$*mboql#!t'
+	export DJANGO_EMAIL_PASSWORD='ixzdsavcwdgohgrj'
+	cp ${spd}/launch_server/settings_debug.py ${spd}/SLED_api/mysite/settings.py
     else
 	export DJANGO_SECRET_KEY=`cat ${spd}/launch_server/secret_key.txt`
 	export DJANGO_EMAIL_PASSWORD=`cat ${spd}/launch_server/email_password.txt`
