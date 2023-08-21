@@ -40,6 +40,7 @@ echo "Adding users..."
 python ${spd}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
 echo "Adding users...OK"
 
+
 echo "Adding lenses..."
 cd ${dir}/add_lenses
 python ${spd}/SLED_api/manage.py shell < upload_directly.py > ../report_add_lenses.txt
@@ -51,10 +52,12 @@ cd ${dir}/add_data
 python ${spd}/SLED_api/manage.py shell < add_instruments_bands.py
 echo "Adding instruments and bands...OK"
 
+
 echo "Adding spectra..."
 cd ${dir}/add_data
 python upload_initial_spectra.py ${spd}/SLED_api > ../report_add_spectra.txt
 echo "Adding spectra...OK"
+
 
 echo "Adding queries..."
 cd ${dir}/add_queries
@@ -66,6 +69,7 @@ echo "Adding collections..."
 cd ${dir}/add_collections
 python ${spd}/SLED_api/manage.py shell < upload_collection.py > ../report_add_collections.txt
 echo "Adding collections...OK"
+
 
 echo "Adding papers..."
 cd ${dir}/add_papers
@@ -84,13 +88,14 @@ cd ${dir}/add_data
 python upload_initial_HST_imaging.py ${spd}/SLED_api > ../report_add_HST_imaging.txt
 echo "Adding HST imaging data...OK"
 
+
 echo "Adding imaging data..."
 cd ${dir}/add_data
 python upload_initial_imaging.py ${spd}/SLED_api > ../report_add_imaging.txt
 echo "Adding imaging data...OK"
 
 
-echo "Adding imaging data..."
+echo "Adding deleting notifications..."
 cd ${dir}/
 python ${spd}/SLED_api/manage.py shell < delete_notifications.py
-echo "Adding imaging data...OK"
+echo "Adding deleting notifications...OK"
