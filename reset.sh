@@ -82,15 +82,15 @@ else
     then
 	export DJANGO_SECRET_KEY='django-insecure-3#$_(o_0g=w68gw@y5anq4$yb2$b!&1_@+bk%jse$*mboql#!t'
 	export DJANGO_EMAIL_PASSWORD='ixzdsavcwdgohgrj'
-	export DJANGO_MEDIA_ROOT=/projects/astro/sled_test/FILES
-	export DJANGO_STATIC_ROOT=/projects/astro/sled_test/STATIC
+	export DJANGO_MEDIA_ROOT=/projects/astro/sled/FILES_TEST
+	export DJANGO_STATIC_ROOT=/projects/astro/sled/STATIC
 	export DJANGO_DB_FILE=${spd}/launch_server/test_server.cnf
 	cp ${spd}/launch_server/settings_debug.py ${spd}/SLED_api/mysite/settings.py
     else
 	export DJANGO_SECRET_KEY=`cat ${spd}/launch_server/secret_key.txt`
 	export DJANGO_EMAIL_PASSWORD=`cat ${spd}/launch_server/email_password.txt`
-	export DJANGO_MEDIA_ROOT=/projects/astro/sled_test/FILES
-	export DJANGO_STATIC_ROOT=/projects/astro/sled_test/STATIC
+	export DJANGO_MEDIA_ROOT=/projects/astro/sled/FILES
+	export DJANGO_STATIC_ROOT=/projects/astro/sled/STATIC
 	export DJANGO_DB_FILE=${spd}/launch_server/test_localhost.cnf
 	export DJANGO_NO_LAST_LOGIN=false
 	cp ${spd}/launch_server/settings_server_root.py ${spd}/SLED_api/mysite/settings.py
