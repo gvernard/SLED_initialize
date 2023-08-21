@@ -38,9 +38,11 @@ export DJANGO_DOMAIN_NAME=sled.astro.unige.ch
 if [ $database = "test" ]
 then
     export DJANGO_DB_FILE=${spd}/launch_server/test_server.cnf
+    cp ${spd}/launch_server/settings_debug.py ${spd}/SLED_api/mysite/settings.py
 else
     export DJANGO_DB_FILE=${spd}/launch_server/test_localhost.cnf
     export DJANGO_NO_LAST_LOGIN=false
+    cp ${spd}/launch_server/settings_server_root.py ${spd}/SLED_api/mysite/settings.py
 fi
 
 
