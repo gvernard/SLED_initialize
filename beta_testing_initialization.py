@@ -22,34 +22,45 @@ from lenses.models import Users, Lenses, Imaging, Spectrum
 
 
 # Query the database for users
-users = Users.objects.exclude(username__in=['AnonymousUser','admin'])
+#users = Users.objects.exclude(username__in=['AnonymousUser','admin']).filter(is_active=True)
+users = Users.objects.exclude(username__in=['AnonymousUser','admin','Cameron','Courbin','Giorgos','anupreeta','aymgal','eric_paic']).filter(is_active=True)
 print(users)
 
+#Lenses.objects.all().update(owner=admin,access_level='PUB')
+#Imaging.objects.all().update(owner=admin,access_level='PUB')
+#Spectrum.objects.all().update(owner=admin)
+
+
+
 admin = Users.objects.get(username='admin')
+admin_qset = Users.getAdmin()
 
-Lenses.objects.all().update(owner=admin,access_level='PUB')
-Imaging.objects.all().update(owner=admin,access_level='PUB')
-Spectrum.objects.all().update(owner=admin)
+justification = "Giving ownership of some objects to play with."
+justification_pri = "Some private objects to play with."
 
 
-                 
-
-for u in users:
-
+for user in users:
+    u = Users.objects.filter(username=user.username)
+    
     # Assign lenses to user
     # --------------------------------------------
     N_lenses = random.randint(10,30)
     N_pri_lenses = random.randint(0,10)
-    lenses = list(Lenses.objects.all().order_by('?')[:N_lenses])
 
-    pri_lenses = lenses[:N_pri_lenses]
-    pub_lenses = lenses[N_pri_lenses:]
-    
-    qset = Lenses.objects.filter(pk__in=[lens.id for lens in pub_lenses])
-    qset.update(owner=u)
+    if N_lenses > 0:
+        lenses = list(Lenses.objects.filter(owner=admin).order_by('?')[:N_lenses])
 
-    qset = Lenses.objects.filter(pk__in=[lens.id for lens in pri_lenses])
-    qset.update(owner=u,access_level='PRI')
+        pri_lenses = lenses[:N_pri_lenses]
+        pub_lenses = lenses[N_pri_lenses:]
+        
+        if len(pub_lenses) > 0:
+            qset = list( Lenses.objects.filter(pk__in=[lens.id for lens in pub_lenses]) )
+            admin.cedeOwnership(qset,u,justification)
+        
+        if len(pri_lenses) > 0:
+            qset = Lenses.objects.filter(pk__in=[lens.id for lens in pri_lenses])
+            admin.makePrivate(qset,justification_pri)
+            admin.cedeOwnership(list(qset),u,justification)
 
     
 
@@ -57,16 +68,21 @@ for u in users:
     # --------------------------------------------
     N_imaging = random.randint(0,10)
     N_pri_imaging = random.randint(0,N_imaging)
-    imagings = list(Imaging.objects.filter(exists=True).order_by('?')[:N_imaging])
 
-    pri_imagings = imagings[:N_pri_imaging]
-    pub_imagings = imagings[N_pri_imaging:]
-    
-    qset = Imaging.objects.filter(pk__in=[imaging.id for imaging in pub_imagings])
-    qset.update(owner=u)
+    if N_imaging > 0:
+        imagings = list(Imaging.objects.filter(exists=True).filter(owner=admin).order_by('?')[:N_imaging])
+        
+        pri_imagings = imagings[:N_pri_imaging]
+        pub_imagings = imagings[N_pri_imaging:]
+        
+        if len(pub_imagings) > 0:
+            qset = list( Imaging.objects.filter(pk__in=[imaging.id for imaging in pub_imagings]) )
+            admin.cedeOwnership(qset,u,justification)
 
-    qset = Imaging.objects.filter(pk__in=[imaging.id for imaging in pri_imagings])
-    qset.update(owner=u,access_level='PRI')
+        if len(pri_imagings) > 0:
+            qset = Imaging.objects.filter(pk__in=[imaging.id for imaging in pri_imagings])
+            admin.makePrivate(qset,justification_pri)
+            admin.cedeOwnership(list(qset),u,justification)
 
 
     
@@ -75,10 +91,12 @@ for u in users:
     N_spectra = random.randint(0,5)
 
     # Select N_lenses random spectra
-    spectra = Spectrum.objects.filter(exists=True).order_by('?')[:N_spectra]
-    qset = Spectrum.objects.filter(pk__in=[spectrum.id for spectrum in spectra])
-    qset.update(owner=u)
+    if N_spectra > 0:
+        spectra = Spectrum.objects.filter(exists=True).filter(owner=admin).order_by('?')[:N_spectra]
+        qset = list( Spectrum.objects.filter(pk__in=[spectrum.id for spectrum in spectra]) )
+        admin.cedeOwnership(qset,u,justification)
 
 
 
-    print(" User %s got: %d Lenses (%d private), %d Imaging data (%d private), %d Spectra" % (u,N_lenses,N_pri_lenses,N_imaging,N_pri_imaging,N_spectra) )
+
+    print(" User %s got: %d Lenses (%d private), %d Imaging data (%d private), %d Spectra" % (user,N_lenses,N_pri_lenses,N_imaging,N_pri_imaging,N_spectra) )

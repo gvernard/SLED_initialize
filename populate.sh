@@ -1,12 +1,14 @@
 #!/bin/bash
 
-if [ $# != 1 ]
+if [ $# != 2 ]
 then
-    echo "One command line argument is required: "
-    echo "  1 - the full path to the SLED project directory, i.e. the directory containing SLED_api"
+    echo "Two command line arguments are required: "
+    echo "  1 - the database to reset: 'test' or 'production' or 'sqlite'"
+    echo "  2 - the full path to the SLED project directory, i.e. the directory containing SLED_api"
     exit 0
 fi
-spd=${1%/} # This has to be the SLED project dir, i.e. the directory containing SLED_api
+database=$1
+spd=${2%/} # This has to be the SLED project dir, i.e. the directory containing SLED_api
 dir=$(pwd)
 
 echo $spd
@@ -28,17 +30,27 @@ else
 fi
 
 
-if [ `hostname -s` == "django01" ]
+export DJANGO_SECRET_KEY=`cat ${spd}/launch_server/secret_key.txt`
+export DJANGO_EMAIL_PASSWORD=`cat ${spd}/launch_server/email_password.txt`   
+export DJANGO_STATIC_ROOT=/projects/astro/sled/STATIC
+export DJANGO_DOMAIN_NAME=sled.astro.unige.ch
+if [ $database = "test" ]
 then
-    export DJANGO_SECRET_KEY=`cat ${spd}/launch_server/secret_key.txt`
-    export DJANGO_EMAIL_PASSWORD=`cat ${spd}/launch_server/email_password.txt`   
-    export DJANGO_DOMAIN_NAME=sled.astro.unige.ch
+    export DJANGO_MEDIA_ROOT=/projects/astro/sled/FILES_TEST
+    export DJANGO_DB_FILE=${spd}/launch_server/test_server.cnf
+    cp ${spd}/launch_server/settings_debug.py ${spd}/SLED_api/mysite/settings.py
+else
+    export DJANGO_MEDIA_ROOT=/projects/astro/sled/FILES
+    export DJANGO_DB_FILE=${spd}/launch_server/test_localhost.cnf
+    export DJANGO_NO_LAST_LOGIN=false
+    cp ${spd}/launch_server/settings_server_root.py ${spd}/SLED_api/mysite/settings.py
 fi
 
 
 echo "Adding users..."
 python ${spd}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
 echo "Adding users...OK"
+
 
 echo "Adding lenses..."
 cd ${dir}/add_lenses
@@ -50,10 +62,12 @@ cd ${dir}/add_data
 python ${spd}/SLED_api/manage.py shell < add_instruments_bands.py
 echo "Adding instruments and bands...OK"
 
+
 echo "Adding spectra..."
 cd ${dir}/add_data
 python upload_initial_spectra.py ${spd}/SLED_api > ../report_add_spectra.txt
 echo "Adding spectra...OK"
+
 
 echo "Adding queries..."
 cd ${dir}/add_queries
@@ -65,6 +79,7 @@ echo "Adding collections..."
 cd ${dir}/add_collections
 python ${spd}/SLED_api/manage.py shell < upload_collection.py > ../report_add_collections.txt
 echo "Adding collections...OK"
+
 
 echo "Adding papers..."
 cd ${dir}/add_papers
@@ -86,7 +101,14 @@ cd ${dir}/add_data
 python upload_initial_HST_imaging.py ${spd}/SLED_api > ../report_add_HST_imaging.txt
 echo "Adding HST imaging data...OK"
 
+
 echo "Adding imaging data..."
 cd ${dir}/add_data
 python upload_initial_imaging.py ${spd}/SLED_api > ../report_add_imaging.txt
 echo "Adding imaging data...OK"
+
+
+echo "Adding deleting notifications..."
+cd ${dir}/
+python ${spd}/SLED_api/manage.py shell < delete_notifications.py
+echo "Adding deleting notifications...OK"

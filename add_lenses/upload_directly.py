@@ -258,10 +258,14 @@ for zzz, eachcsv in enumerate(csvs):
         print("Upload completed successfully!")
     else:
         print(r.content)
-        if 'duplicates' in r.text:
-            print("Something went wrong!")
-            wait = input()
-            print('d///f')
+        if 'text' in r:
+            if 'duplicates' in r.text:
+                print("Something went wrong!")
+                wait = input()
+                print('d///f')
+        else:
+                print("Something went wrong!")
+
 
     if len(allupdates)>0:
         r  = c.post('/api/update-lens/', data=allupdates, content_type="application/json")
