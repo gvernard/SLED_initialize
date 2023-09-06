@@ -45,7 +45,6 @@ cd ${dir}/add_lenses
 python ${spd}/SLED_api/manage.py shell < upload_directly.py > ../report_add_lenses.txt
 echo "Adding lenses...OK"
 
-
 echo "Adding instruments and bands..."
 cd ${dir}/add_data
 python ${spd}/SLED_api/manage.py shell < add_instruments_bands.py
@@ -72,12 +71,15 @@ cd ${dir}/add_papers
 python ${spd}/SLED_api/manage.py shell < upload_papers_API.py > ../report_add_papers.txt
 echo "Adding papers...OK"
 
+echo "Adding redshifts..."
+cd ${dir}/add_data
+python upload_initial_redshifts.py > ../report_add_redshifts.txt
+echo "Adding redshifts...OK"
 
 echo "Adding catalogue data..."
 cd ${dir}/add_data
 python upload_initial_catalogues_direct.py ${spd}/SLED_api > ../report_add_catalogues.txt
 echo "Adding catalogue data...OK"
-
 
 echo "Adding HST imaging data..."
 cd ${dir}/add_data

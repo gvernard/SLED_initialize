@@ -20,8 +20,8 @@ from guardian.shortcuts import assign_perm
 
 
 
-mysite = = Site.objects.all()[0]
-mysite.domain = os.environ.get('DJANGO_DOMAIN_NAME',example.com)
+mysite = Site.objects.all()[0]
+mysite.domain = os.environ.get('DJANGO_DOMAIN_NAME', 'example.com')
 mysite.name = 'Strong Lenses Database'
 mysite.save()
 

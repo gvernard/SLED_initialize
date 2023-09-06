@@ -11,6 +11,7 @@ import json
 
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 
 def legacysurvey_data(name, ra, dec, band, layer='ls-dr9-south', outpath='./images_to_upload/', size=10, verbose=False):
@@ -35,6 +36,8 @@ def legacysurvey_data(name, ra, dec, band, layer='ls-dr9-south', outpath='./imag
             fits_outname = outpath+name+'_LegacySurveySouth_'+band+'.fits'
         if layer=='ls-dr9-north':
             fits_outname = outpath+name+'_LegacySurveyNorth_'+band+'.fits'
+        if layer=='ls-dr10':
+            fits_outname = outpath+name+'_LegacySurveyDR10_'+band+'.fits'
         outname = save_single_band_layer(fits_outname, ra, dec, size=size, band=band.lower(), layer=layer)
         if outname==0:
             return 0
@@ -64,6 +67,8 @@ def legacy_survey_layer_band_image_and_json(name, ra, dec, band, layer, jsonpath
     """
     parameter explanations
     """
+    if layer=='ls-dr10':
+        instrument, pixel_size, filemiddle = 'Legacy Survey (DR10)', 0.262, 'LegacySurveyDR10'
     if layer=='ls-dr9-south':
         instrument, pixel_size, filemiddle = 'Legacy Survey (South)', 0.262, 'LegacySurveySouth'
     if layer=='ls-dr9-north':
@@ -83,14 +88,16 @@ def legacy_survey_layer_band_image_and_json(name, ra, dec, band, layer, jsonpath
     fits_outname = jsonpath+name+'_'+filemiddle+'_'+band+'.fits'
     json_outname = jsonpath+name+'_'+filemiddle+'_'+band+'.json'
 
-    data = fits.open(fits_outname)[0].data
-    
-    plt.figure(figsize=(1.5, 1.5))
-    plt.imshow(data, interpolation='nearest', origin='lower', cmap='cubehelix', vmax=np.nanpercentile(data, 99.), vmin=np.nanpercentile(data, 5.))
-    plt.axis('off')
-    plt.tight_layout()
-    plt.savefig(jpg_outname, bbox_inches='tight', pad_inches=0.01, format='jpg')
-    plt.close()
+    if not os.path.exists(jpg_outname):
+        data = fits.open(fits_outname)[0].data
+        plt.figure(figsize=(1.5, 1.5))
+        plt.imshow(data, interpolation='nearest', origin='lower', cmap='cubehelix', vmax=np.nanpercentile(data, 99.), vmin=np.nanpercentile(data, 5.))
+        plt.axis('off')
+        plt.tight_layout()
+        plt.savefig(jpg_outname, bbox_inches='tight', pad_inches=0.01, format='jpg')
+        plt.close()
+    else:
+        print('image already existed!')
 
     exptime = 1. #PLEASE COME BACK AND WORK OUT A WAY TO GET THIS INFO
     date = Time(0., format='mjd')
@@ -104,6 +111,8 @@ def legacy_survey_layer_band_image_and_json(name, ra, dec, band, layer, jsonpath
     outfile = open(json_outname, 'w')
     json.dump(upload_json, outfile)
     outfile.close()
+
+    os.remove(fits_outname)
 
     return json_outname
 
@@ -123,7 +132,7 @@ def savecolorim(ra, dec, arcsec_width, outpath, layer='ls-dr9'):
     size = int(arcsec_width/0.262)
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    im = legacy_survey_colour_image(ra=ra, dec=dec, size=size, layer='ls-dr10')
+    im = legacy_survey_colour_image(ra=ra, dec=dec, size=size, layer=layer)
     ax.imshow(im, interpolation='nearest')
     ax.set_xticks([])
     ax.set_yticks([])

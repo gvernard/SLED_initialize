@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import json
 import requests
+import os
 
 ps1filename = "https://ps1images.stsci.edu/cgi-bin/ps1filenames.py"
 fitscut = "https://ps1images.stsci.edu/cgi-bin/fitscut.cgi"
@@ -304,13 +305,16 @@ def panstarrs_band_image_and_json(name, ra, dec, band, jsonpath, imagepath, size
 
     #make our own single band colour image
     header = fits.open(fits_outname)[0].header
-    data = fits.open(fits_outname)[0].data
-    plt.figure(figsize=(1.5, 1.5))
-    plt.imshow(data, interpolation='nearest', origin='lower', cmap='cubehelix', vmax=np.nanpercentile(data, 99.), vmin=np.nanpercentile(data, 5.))
-    plt.axis('off')
-    plt.tight_layout()
-    plt.savefig(jpg_outname, bbox_inches='tight', pad_inches=0.01, format='jpg')
-    plt.close()
+    if not os.path.exists(jpg_outname):
+        data = fits.open(fits_outname)[0].data
+        plt.figure(figsize=(1.5, 1.5))
+        plt.imshow(data, interpolation='nearest', origin='lower', cmap='cubehelix', vmax=np.nanpercentile(data, 99.), vmin=np.nanpercentile(data, 5.))
+        plt.axis('off')
+        plt.tight_layout()
+        plt.savefig(jpg_outname, bbox_inches='tight', pad_inches=0.01, format='jpg')
+        plt.close()
+    else:
+        print('image already existed!')
 
     #get the metadata for the json, including the path to the image
     exptime = header['EXPTIME']
@@ -325,6 +329,8 @@ def panstarrs_band_image_and_json(name, ra, dec, band, jsonpath, imagepath, size
     outfile = open(json_outname, 'w')
     json.dump(upload_json, outfile)
     outfile.close()
+
+    os.remove(fits_outname)
 
     return json_outname
 

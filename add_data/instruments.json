@@ -30,14 +30,8 @@
     "base_types":"Catalogue,Imaging"
     },
     {
-    "name": "Legacy Survey (South)",
-    "extended_name": "DeCAM/DECaLS",
-    "info": "",
-    "base_types":"Imaging"
-    },
-    {
-    "name": "Legacy Survey (North)",
-    "extended_name": "BASS/MzLS",
+    "name": "Legacy Survey (DR10)",
+    "extended_name": "BASS/MzLS + DeCAM/DECaLS",
     "info": "",
     "base_types":"Imaging"
     },

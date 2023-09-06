@@ -6,6 +6,7 @@ import glob
 import django
 from django.conf import settings
 from django.db.models import Q, F, Func, FloatField, CheckConstraint
+import fnmatch 
 
 dirname = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(dirname)
@@ -40,6 +41,8 @@ offline = False
 #data = Table.read('../trial_sample/lensed_quasars_uploadtable.fits')
 lenses = Lenses.objects.all()
 
+allspectra = glob.glob(jsonpath+'*_SDSSDR1*.json')
+
 #for i in range(0, 50):
 for kk, lens in enumerate(lenses): 
     if (kk<Nstart) or (kk>Nend):
@@ -47,26 +50,28 @@ for kk, lens in enumerate(lenses):
     print(kk, len(lenses))
     name, ra, dec = lens.name, float(lens.ra), float(lens.dec)
 
-
-    spectra = glob.glob(jsonpath+name+'_SDSSDR1*.json')
+    spectra = fnmatch.filter(allspectra, jsonpath+name+'_SDSSDR1*.json')
     print(spectra)
     if len(spectra)>1:
         print('MAYBE A PROBLEM')
-    if len(spectra)>0:
-        #specids = [spec.split('_')[-1][:-5] for spec in spectra]
-        continue
-
-
-
+        specids = [spec.split('_')[-1][:-5] for spec in spectra]
+    elif len(spectra)==1:
+        specids = [spec.split('_')[-1][:-5] for spec in spectra]
+        #df
+        if specids == ['SDSSDR16']:
+            spectra = None
     else:
         spectra = spectrum_utils.query_vizier_sdss_dr16(ra, dec, radius=5.)
         if spectra is not None:
             specids = spectra['Sp-ID']
     has_valid_spectrum = False
+
     if spectra is not None:
         for specnum, spec in enumerate(spectra):
             jsonfile = jsonpath+name+'_SDSSDR16_'+specids[specnum]+'.json'
-            if not os.path.exists(jsonfile):
+            if os.path.exists(jsonfile):
+                has_valid_spectrum = True
+            else:
                 #check flag to see if spectrum was unplugged
                 flag = spec['f_zsp']
                 if "{:08d}".format(int(format(flag, 'b')))[-8]=='1':

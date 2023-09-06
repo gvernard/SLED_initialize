@@ -50,12 +50,17 @@ for kk in range(len(instruments)):
 
     jsons = glob.glob(jsonpath+'*'+survey+'_'+instrument+'_*.json')
     allbands = []
+    print(len(jsons), 'images to be uploaded for', instrument, survey)
     for js in jsons:
         f = open(js)
         uploadjson = json.load(f)
         f.close()
-        uploads.append(uploadjson)
+    
         allbands.append(uploadjson['band'])
+        if uploadjson['exposure_time']<=0.0:
+            print('no exposure time')
+            continue
+        uploads.append(uploadjson)
         if uploadjson['band']=='clear':
             print(js)
 

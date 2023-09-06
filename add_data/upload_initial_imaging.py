@@ -6,6 +6,7 @@ import glob
 import django
 from django.conf import settings
 from django.db.models import Q, F, Func, FloatField, CheckConstraint
+import numpy as np
 
 dirname = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(dirname)
@@ -39,21 +40,18 @@ username, password = 'admin', '123'
 #data = Table.read('../trial_sample/lensed_quasars_uploadtable.fits')]
 lenses = Lenses.objects.all()
 
-surveys = ['PanSTARRS', 'LegacySurveySouth', 'LegacySurveyNorth']
-bandss = ['grizY', 'grz', 'grz']
-instruments = ['Pan-STARRS1', 'Legacy Survey (South)', 'Legacy Survey (North)']
+surveys = ['PanSTARRS', 'LegacySurveyDR10'] #, 'LegacySurveyNorth']
+bandss = ['grizY', 'grz'] #, 'grz']
+instruments = ['Pan-STARRS1', 'Legacy Survey (DR10)']#, 'Legacy Survey (North)']
 
-#surveys = ['LegacySurveySouth', 'LegacySurveyNorth']
-#bandss = ['grz', 'grz']
-#instruments = ['Legacy Survey (South)', 'Legacy Survey (North)']
-
-
-
-for kk in range(len(surveys)):
+#for kk in range(len(surveys)):
+kk=1
+if 1==1:
     survey, bands, instrument = surveys[kk], bandss[kk], instruments[kk]
     uploads = []
     jsonfiles = list(set(glob.glob(jsonpath+'*_'+survey+'_*.json')) - set(glob.glob(jsonpath+'*_'+survey+'_*hotom*.json')))
     for i, jsonfile in enumerate(jsonfiles):
+
         #print(i)
         f = open(jsonfile)
         uploadjson = json.load(f)
@@ -64,6 +62,11 @@ for kk in range(len(surveys)):
 
 
         uploads.append(uploadjson)
+        if i in np.arange(1000, len(jsonfiles)+5000, 1000):
+            print(i, 'have been uploaded of', len(jsonfiles))
+            upload = database_utils.upload_imaging_to_db_direct(datalist=uploads, username=username)
+            uploads = []
+
     print(len(uploads))
     print('Uploading to database')
     upload = database_utils.upload_imaging_to_db_direct(datalist=uploads, username=username)

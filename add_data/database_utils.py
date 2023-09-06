@@ -6,22 +6,22 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 import sys
-sys.path.append('../../../../SLED_api')
+sys.path.append('../../SLED_api')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 
 import django
 django.setup()
 
 from django.conf import settings
-from lenses.models import Catalogue, Imaging, Spectrum, Instrument, Band, Users, Lenses, AdminCollection
+from lenses.models import Catalogue, Imaging, Spectrum, Instrument, Band, Users, Lenses, AdminCollection, Redshift
 from api.serializers import ImagingDataUploadSerializer
 from django.db.models import Q, F, Func, FloatField, CheckConstraint
 from django.utils.timezone import make_aware
 from actstream import action
 
 
-def match_to_lens(ra, dec):
-    qset = Lenses.objects.all().annotate(distance=Func(F('ra'),F('dec'),ra,dec,function='distance_on_sky',output_field=FloatField())).filter(distance__lt=10.)
+def match_to_lens(ra, dec, radius=5.):
+    qset = Lenses.objects.all().annotate(distance=Func(F('ra'),F('dec'),ra,dec,function='distance_on_sky',output_field=FloatField())).filter(distance__lt=radius)
     if qset.count() > 0:
         return qset
     else:
@@ -126,15 +126,17 @@ def upload_spectrum_to_db_direct(datalist, username):
 
     spectrum_list = []
 
-    for data in datalist:
-
+    for i, data in enumerate(datalist):
+        #print(i, len(datalist), 'uploading')
+        if i in np.arange(0, 100000, 100):
+            print(i, len(datalist))
         finaldata = data.copy()
 
         path = settings.MEDIA_ROOT + '/temporary/admin/'
         if not os.path.exists(path):
             os.makedirs(path)
 
-        print(data)
+        #print(data)
         if data['exists']:
             if '/' in data['image']:
                 savename = data['image'].split('/')[-1]
@@ -148,6 +150,11 @@ def upload_spectrum_to_db_direct(datalist, username):
         lens = match_to_lens(float(data['ra']), float(data['dec']))
         if not lens:
             print('No lens found for the following data upload')
+            print(data)
+            continue
+
+        if len(lens)>1:
+            print('too many lens matches found for ', lens)
             print(data)
             continue
 
@@ -202,12 +209,25 @@ def upload_spectrum_to_db_direct(datalist, username):
 def upload_catalogue_to_db_direct(datalist, username):
 
     catalogue_list = []
-    for data in datalist:
+    m = len(datalist)
+    for i, data in enumerate(datalist):
+        #print(i, m)
         finaldata = data.copy()
 
         finaldata['instrument'] = Instrument.objects.get(name=data['instrument'])
         finaldata['band'] = Band.objects.get(name=data['band'])
-        lens = match_to_lens(float(data['radet']), float(data['decdet']))
+        lens = match_to_lens(float(data['ra']), float(data['dec']))
+
+        if not lens:
+            print('No lens found for the following data upload')
+            print(data)
+            continue
+
+        if len(lens)>1:
+            print('too many lens matches found for ', lens)
+            print(data)
+            continue
+
         if lens:
             finaldata['lens'] = lens[0]
             finaldata.pop('ra')
@@ -231,3 +251,31 @@ def upload_catalogue_to_db_direct(datalist, username):
             catalogue_list.clear()
 
     return 0
+
+def upload_redshifts_to_db_direct(datalist, username):
+
+    m = len(datalist)
+    for i, data in enumerate(datalist):
+        print(i, m)
+        finaldata = data.copy()
+        lens = match_to_lens(float(data['ra']), float(data['dec']))
+
+        if not lens:
+            print('No lens found for the following data upload')
+            print(data)
+            df
+            continue
+
+        if len(lens)>1:
+            print('too many lens matches found for ', lens)
+            print(data)
+            df
+            continue
+
+        if lens:
+            finaldata['lens'] = lens[0]
+            finaldata.pop('ra')
+            finaldata.pop('dec')
+            redshift = Redshift(**finaldata)
+            redshift.owner_id = Users.objects.get(username=username).id
+            redshift.save()

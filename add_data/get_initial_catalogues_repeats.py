@@ -24,6 +24,17 @@ import legacysurvey_utils
 import imaging_utils
 import database_utils
 import gaia_utils 
+import pickle
+
+def parse(d):
+    dictionary = dict()
+    # Removes curly braces and splits the pairs into a list
+    pairs = d.strip('{}').split(', ')
+    for i in pairs:
+        pair = i.split(': ')
+        # Other symbols from the key-value pair should be stripped.
+        dictionary[pair[0].strip('\'\'\"\"')] = pair[1].strip('\'\'\"\"')
+    return dictionary
 
 Nstart = int(sys.argv[2])
 Nend = int(sys.argv[3])
@@ -41,27 +52,38 @@ lenses = Lenses.objects.all()
 surveys = ['PanSTARRS', 'Gaia-DR1', 'Gaia-DR2']
 bandss = ['grizY', 'G', ['G', 'BP', 'RP']]
 instruments = ['Pan-STARRS1', 'Gaia-DR1', 'Gaia-DR2']
+ 
+file = open('./bad_objects.txt', 'r')
+lines = file.read().split('\n')
+ras = [float(parse(line)['radet']) for line in lines]
+decs = [float(parse(line)['decdet']) for line in lines]
+coords = np.array([ras, decs]).T
+k = np.unique([str(ra)+str(dec) for ra,dec in zip(ras, decs)], True)[1]
+
+final_ras, final_decs = coords[k].T
+
+for ra, dec in zip(final_ras, final_decs):
+    lens = database_utils.match_to_lens(ra, dec, radius=15.)
+    if not lens:
+        print('actually did not found a lens for this one')
+        print(ra, dec, lens)
 
 
 
 for kk in range(len(surveys)):
     survey, bands, instrument = surveys[kk], bandss[kk], instruments[kk]
     
-    for i in range(len(lenses)):
-        if (i<Nstart) or (i>Nend):
-            continue
-
         lens = lenses[i]
         name, ra, dec = lens.name, float(lens.ra), float(lens.dec)
         print(kk, survey, name, ra, dec, i, len(lenses))
         for band in bands:
             jsonfile = outpath+name+'_'+survey+'_'+band+'_photometry1.json'
-            if os.path.exists(jsonfile):
-                print('files already found')
-                continue
+            #if os.path.exists(jsonfile):
+            #    print('files already found')
+            #    continue
 
-            if not os.path.exists(jsonfile):
-                #if 1==1:
+            #if not os.path.exists(jsonfile):
+            if 1==1:
                 if verbose:
                     print('checking for ', survey,' data in', band)
                 #download the PanSTARRS data

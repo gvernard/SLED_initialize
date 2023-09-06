@@ -6,6 +6,7 @@ import glob
 import django
 from django.conf import settings
 from django.db.models import Q, F, Func, FloatField, CheckConstraint
+import numpy as np
 
 dirname = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(dirname)
@@ -41,9 +42,12 @@ survey = 'SDSS DR16'
 offline = False
 
 uploads = []
-spectra = glob.glob(jsonpath+'*_SDSSDR16_*.json')
-
-for jsonfile in spectra:
+spectra = glob.glob(jsonpath+'*_SDSSDR1*.json')
+m = len(spectra)
+for i, jsonfile in enumerate(spectra):
+    #print(i, m)
+    if i in np.arange(0, 100000, 1000):
+        print(i, m)
     f = open(jsonfile)
     uploadjson = json.load(f)
     f.close()

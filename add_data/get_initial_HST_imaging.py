@@ -58,7 +58,7 @@ for kk in range(len(instruments)):
         
         name, ra, dec = lens.name, float(lens.ra), float(lens.dec)
     
-        filtered_results = hst_utils.best_hst(ra, dec, datemin='1988-01-01T00:00:00.000', datemax='2023-02-14T00:00:00.000', one_instrument=instrument)
+        filtered_results = hst_utils.best_hst(ra, dec, datemin='1988-01-01T00:00:00.000', datemax='2023-08-23T00:00:00.000', one_instrument=instrument)
         if filtered_results:
             for j in range(len(filtered_results)):
                 instr, filt = filtered_results['instrument_name'][j], filtered_results['energy_bandpassName'][j]

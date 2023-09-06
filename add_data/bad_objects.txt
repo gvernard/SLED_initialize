@@ -1,0 +1,76 @@
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 16.56457, 'decdet': -53.92945, 'ra': 16.56457, 'dec': -53.92945, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 217.5081, 'decdet': 55.7763, 'ra': 217.5081, 'dec': 55.7763, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 157.95, 'decdet': 43.71583, 'ra': 157.95, 'dec': 43.71583, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 35.23333, 'decdet': -6.65944, 'ra': 35.23333, 'dec': -6.65944, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 73.50417, 'decdet': -3.14278, 'ra': 73.50417, 'dec': -3.14278, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 333.807, 'decdet': 1.04414, 'ra': 333.807, 'dec': 1.04414, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 257.7541, 'decdet': 29.49722, 'ra': 257.7541, 'dec': 29.49722, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 119.8874, 'decdet': -17.5366, 'ra': 119.8874, 'dec': -17.5366, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 33.19583, 'decdet': -5.93111, 'ra': 33.19583, 'dec': -5.93111, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 80.62971, 'decdet': -42.07187, 'ra': 80.62971, 'dec': -42.07187, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 335.45, 'decdet': 1.26167, 'ra': 335.45, 'dec': 1.26167, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 37.26667, 'decdet': -6.32722, 'ra': 37.26667, 'dec': -6.32722, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 50.76439, 'decdet': -27.56596, 'ra': 50.76439, 'dec': -27.56596, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 140.40417, 'decdet': 2.23583, 'ra': 140.40417, 'dec': 2.23583, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 50.567, 'decdet': -52.576, 'ra': 50.567, 'dec': -52.576, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 216.38333, 'decdet': 21.57111, 'ra': 216.38333, 'dec': 21.57111, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 13.60917, 'decdet': -24.0778, 'ra': 13.60917, 'dec': -24.0778, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 133.3625, 'decdet': -2.62917, 'ra': 133.3625, 'dec': -2.62917, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 133.99583, 'decdet': -4.15472, 'ra': 133.99583, 'dec': -4.15472, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'access_level': 'PUB', 'ra': 205.44965, 'dec': 0.73346, 'radet': 205.4506153, 'decdet': 0.7344633, 'exists': True, 'mag': 20.049, 'Dmag': 0.026, 'distance': 5.012}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 36.7, 'decdet': -9.0725, 'ra': 36.7, 'dec': -9.0725, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 211.3875, 'decdet': 55.04194, 'ra': 211.3875, 'dec': 55.04194, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 149.87517, 'decdet': 2.57436, 'ra': 149.87517, 'dec': 2.57436, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 182.3, 'decdet': 27.07139, 'ra': 182.3, 'dec': 27.07139, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 139.77083, 'decdet': 3.61083, 'ra': 139.77083, 'dec': 3.61083, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 17.8625, 'decdet': 10.98444, 'ra': 17.8625, 'dec': 10.98444, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'access_level': 'PUB', 'ra': 151.1452, 'dec': 41.21138, 'radet': 151.145034, 'decdet': 41.2108948, 'exists': True, 'mag': 19.045, 'Dmag': 0.01, 'distance': 1.804}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 252.41667, 'decdet': 30.81917, 'ra': 252.41667, 'dec': 30.81917, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 215.8375, 'decdet': 57.37861, 'ra': 215.8375, 'dec': 57.37861, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 176.92917, 'decdet': 26.16444, 'ra': 176.92917, 'dec': 26.16444, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 335.57083, 'decdet': 0.20056, 'ra': 335.57083, 'dec': 0.20056, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 331.275, 'decdet': 1.78417, 'ra': 331.275, 'dec': 1.78417, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 215.24583, 'decdet': 56.50194, 'ra': 215.24583, 'dec': 56.50194, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 334.87083, 'decdet': -0.29528, 'ra': 334.87083, 'dec': -0.29528, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 90.693, 'decdet': -45.412, 'ra': 90.693, 'dec': -45.412, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 335.05, 'decdet': 1.10167, 'ra': 335.05, 'dec': 1.10167, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 357.53333, 'decdet': 36.90972, 'ra': 357.53333, 'dec': 36.90972, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 219.3124, 'decdet': 10.16916, 'ra': 219.3124, 'dec': 10.16916, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 338.39167, 'decdet': 30.20639, 'ra': 338.39167, 'dec': 30.20639, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 132.2875, 'decdet': -4.20722, 'ra': 132.2875, 'dec': -4.20722, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 65.9372, 'decdet': -54.5308, 'ra': 65.9372, 'dec': -54.5308, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 209.95417, 'decdet': 55.59722, 'ra': 209.95417, 'dec': 55.59722, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 58.69583, 'decdet': -24.3375, 'ra': 58.69583, 'dec': -24.3375, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'access_level': 'PUB', 'ra': 151.1452, 'dec': 41.21138, 'radet': 151.1455173, 'decdet': 41.2118788, 'exists': True, 'mag': 19.167, 'Dmag': 0.011, 'distance': 1.991}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 149.8375, 'decdet': 2.11056, 'ra': 149.8375, 'dec': 2.11056, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 331.62083, 'decdet': 0.95778, 'ra': 331.62083, 'dec': 0.95778, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 215.54167, 'decdet': 2.1525, 'ra': 215.54167, 'dec': 2.1525, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 33.025, 'decdet': -7.92444, 'ra': 33.025, 'dec': -7.92444, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'access_level': 'PUB', 'ra': 132.87527, 'dec': 2.30646, 'radet': 132.8766617, 'decdet': 2.3064981, 'exists': True, 'mag': 19.654, 'Dmag': 0.013, 'distance': 5.008}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 12.0, 'decdet': 14.0, 'ra': 12.0, 'dec': 14.0, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 188.692, 'decdet': 23.0169, 'ra': 188.692, 'dec': 23.0169, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 36.7, 'decdet': -4.10278, 'ra': 36.7, 'dec': -4.10278, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 136.02917, 'decdet': -0.99778, 'ra': 136.02917, 'dec': -0.99778, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 344.89167, 'decdet': -13.38028, 'ra': 344.89167, 'dec': -13.38028, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 29.775, 'decdet': -16.14556, 'ra': 29.775, 'dec': -16.14556, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 252.70833, 'decdet': 31.39111, 'ra': 252.70833, 'dec': 31.39111, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 209.5021, 'decdet': 1.44024, 'ra': 209.5021, 'dec': 1.44024, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 219.58946, 'decdet': 3.67228, 'ra': 219.58946, 'dec': 3.67228, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 35.9875, 'decdet': -6.86167, 'ra': 35.9875, 'dec': -6.86167, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 132.49583, 'decdet': -2.86167, 'ra': 132.49583, 'dec': -2.86167, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 349.89583, 'decdet': 11.83778, 'ra': 349.89583, 'dec': 11.83778, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 215.12917, 'decdet': 52.97278, 'ra': 215.12917, 'dec': 52.97278, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 114.29167, 'decdet': 19.24333, 'ra': 114.29167, 'dec': 19.24333, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 92.68376, 'decdet': -55.99188, 'ra': 92.68376, 'dec': -55.99188, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 334.71667, 'decdet': 1.67722, 'ra': 334.71667, 'dec': 1.67722, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'access_level': 'PUB', 'ra': 263.08122, 'dec': 17.64705, 'radet': 263.081225, 'decdet': 17.6470481, 'exists': True, 'mag': 19.467, 'Dmag': 0.018, 'distance': 0.019}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 36.54167, 'decdet': -4.33639, 'ra': 36.54167, 'dec': -4.33639, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 357.1875, 'decdet': 1.80972, 'ra': 357.1875, 'dec': 1.80972, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 209.9332, 'decdet': 1.47053, 'ra': 209.9332, 'dec': 1.47053, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 314.46729, 'decdet': 2.29466, 'ra': 314.46729, 'dec': 2.29466, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 49.77002, 'decdet': -49.36391, 'ra': 49.77002, 'dec': -49.36391, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'access_level': 'PUB', 'ra': 132.87527, 'dec': 2.30646, 'radet': 132.8766617, 'decdet': 2.3064981, 'exists': True, 'mag': 19.654, 'Dmag': 0.013, 'distance': 5.008}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 38.2125, 'decdet': -4.13972, 'ra': 38.2125, 'dec': -4.13972, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 268.6791, 'decdet': 21.68166, 'ra': 268.6791, 'dec': 21.68166, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'radet': 33.35417, 'decdet': -7.73194, 'ra': 33.35417, 'dec': -7.73194, 'exists': False}
+{'instrument': 'Gaia-DR1', 'band': 'G', 'access_level': 'PUB', 'ra': 186.6188, 'dec': -45.7029, 'radet': 186.6191014, 'decdet': -45.7040616, 'exists': True, 'mag': 20.367, 'Dmag': 0.019, 'distance': 4.25}

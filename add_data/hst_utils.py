@@ -241,6 +241,7 @@ def download_cutouts_HLA(observation, savedir, savename, ra, dec, size=10):
     #now get correct size cutout
     npix = int(size*2**0.5/pixscale)
     url = 'https://hla.stsci.edu/cgi-bin/fitscut.cgi?red='+red+'&RA='+str(ra)+'&Dec='+str(dec)+'&size='+str(npix)+'&format=FITS'
+
     dat = fits.open(url)
 
     data, header = dat[0].data, dat[0].header
@@ -250,8 +251,9 @@ def download_cutouts_HLA(observation, savedir, savename, ra, dec, size=10):
     #fill nans before rotation:
     mask = np.isnan(data)
     data[mask] = np.interp(np.flatnonzero(mask), np.flatnonzero(~mask), data[~mask])
-
+    data[data==0.] = np.nan
     bg, sigma = clip(data, 4.)
+
     data = scipy.ndimage.rotate(data, rotangle, order=3)
     rotmask = scipy.ndimage.rotate(mask, rotangle, order=0)
     data[rotmask] = np.nan
@@ -265,6 +267,12 @@ def download_cutouts_HLA(observation, savedir, savename, ra, dec, size=10):
     cmap.set_bad('black')
 
     lenspixels = data[data>bg+3*sigma]
+    if len(lenspixels)<100:
+        lenspixels = data[data>bg-sigma]
+
+    print('data nanmax is', np.nanmax(data))
+    if np.isnan(np.nanmax(data)):
+        return None, None, None
 
     fig, ax = plt.subplots(figsize=(5, 5))
     ax.imshow(data, origin='lower', cmap=cmap, norm=LogNorm(vmax=np.nanpercentile(lenspixels, 99.5), vmin=bg+sigma))
