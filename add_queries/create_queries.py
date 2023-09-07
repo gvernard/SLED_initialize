@@ -7,9 +7,17 @@ admin = Users.objects.get(username='admin')
 names, descriptions, query_details = [], [], []
 
 #LENSED QUASARS
+name = 'All candidates and confirmed lenses'
+description = 'All systems that are confirmed or candidate lenses'
+query_detail = {'lens-flag':['CONFIRMED', 'CANDIDATE']}
+names.append(name)
+descriptions.append(description)
+query_details.append(query_detail)
+
+#LENSED QUASARS
 name = 'Lensed quasars'
 description = 'All confirmed lenses with quasar sources'
-query_detail = {'lens-source_type':'QUASAR', 'lens-flag_confirmed':True}
+query_detail = {'lens-source_type':'QUASAR', 'lens-flag':'CONFIRMED'}
 names.append(name)
 descriptions.append(description)
 query_details.append(query_detail)
@@ -17,7 +25,7 @@ query_details.append(query_detail)
 #QUADS
 name = 'Quadruply-imaged lensed quasars'
 description = 'All confirmed lensed quasars with four or more images'
-query_detail = {'lens-source_type':'QUASAR', 'lens-flag_confirmed':True, 'lens-n_img_min':4}
+query_detail = {'lens-source_type':'QUASAR', 'lens-flag':'CONFIRMED', 'lens-n_img_min':4}
 names.append(name)
 descriptions.append(description)
 query_details.append(query_detail)
@@ -26,7 +34,7 @@ query_details.append(query_detail)
 #DOUBLES
 name = 'Doubly-imaged lensed quasars'
 description = 'All confirmed lensed quasars with 2 images'
-query_detail = {'lens-source_type':'QUASAR', 'lens-flag_confirmed':True, 'lens-lens-n_img_min':2, 'lens-n_img_max':2}
+query_detail = {'lens-source_type':'QUASAR', 'lens-flag':'CONFIRMED', 'lens-lens-n_img_min':2, 'lens-n_img_max':2}
 names.append(name)
 descriptions.append(description)
 query_details.append(query_detail)
@@ -34,7 +42,7 @@ query_details.append(query_detail)
 #TRIPLES
 name = 'Triply-imaged lensed quasars'
 description = 'All confirmed lensed quasars with 3 images'
-query_detail = {'lens-source_type':'QUASAR', 'lens-flag_confirmed':True, 'lens-n_img_min':3, 'lens-n_img_max':3}
+query_detail = {'lens-source_type':'QUASAR', 'lens-flag':'CONFIRMED', 'lens-n_img_min':3, 'lens-n_img_max':3}
 names.append(name)
 descriptions.append(description)
 query_details.append(query_detail)
@@ -44,7 +52,7 @@ query_details.append(query_detail)
 #z>4 lensed quasars
 name = 'z>4 lensed quasars'
 description = 'All confirmed lensed quasars with source redshifts above z=4'
-query_detail = {'lens-source_type':'QUASAR', 'lens-flag_confirmed':True, 'lens-z_source_min':4}
+query_detail = {'lens-source_type':'QUASAR', 'lens-flag':'CONFIRMED', 'redshift-z_method': ['SPECTROSCOPIC'], 'redshift-z_source_min': ['4']}
 names.append(name)
 descriptions.append(description)
 query_details.append(query_detail)
@@ -54,7 +62,7 @@ query_details.append(query_detail)
 #LENSED GALAXIES
 name = 'Lensed galaxies'
 description = 'All confirmed lenses with galaxy sources'
-query_detail = {'lens-source_type':'GALAXY', 'lens-flag_confirmed':True}
+query_detail = {'lens-source_type':'GALAXY', 'lens-flag':'CONFIRMED'}
 names.append(name)
 descriptions.append(description)
 query_details.append(query_detail)
@@ -63,7 +71,7 @@ query_details.append(query_detail)
 #LENSED SUPERNOVAE
 name = 'Lensed supernovae'
 description = 'All confirmed lenses with supernovae sources'
-query_detail = {'lens-source_type':'SN', 'lens-flag_confirmed':True}
+query_detail = {'lens-source_type':'SN', 'lens-flag':'CONFIRMED'}
 names.append(name)
 descriptions.append(description)
 query_details.append(query_detail)
@@ -72,7 +80,7 @@ query_details.append(query_detail)
 #CONFIRMED LENSES WITH HST IMAGING
 name = 'Lenses with HST imaging'
 description = 'All confirmed lenses with ACS or WFC3 imaging'
-query_detail = {'lens-flag_confirmed':True, 'imaging-instrument':[str(Instrument.objects.get(name='ACS').pk), str(Instrument.objects.get(name='WFC3').pk)]}
+query_detail = {'lens-flag':'CONFIRMED', 'imaging-instrument':[str(Instrument.objects.get(name='ACS').pk), str(Instrument.objects.get(name='WFC3').pk)]}
 names.append(name)
 descriptions.append(description)
 query_details.append(query_detail)
@@ -81,7 +89,7 @@ query_details.append(query_detail)
 #CANDIDATE LENSES WITH HST IMAGING
 name = 'Candidate lenses with HST imaging'
 description = 'All candidate lenses with ACS or WFC3 imaging'
-query_detail = {'lens-flag_unconfirmed':True, 'lens-flag_uncontaminant':True, 'imaging-instrument':[str(Instrument.objects.get(name='ACS').pk), str(Instrument.objects.get(name='WFC3').pk)]}
+query_detail = {'lens-flag':'CANDIDATE', 'imaging-instrument':[str(Instrument.objects.get(name='ACS').pk), str(Instrument.objects.get(name='WFC3').pk)]}
 names.append(name)
 descriptions.append(description)
 query_details.append(query_detail)
@@ -90,7 +98,7 @@ query_details.append(query_detail)
 #Confirmed lenses with spectroscopy and Pan-STARRS imaging
 name = 'Confirmed lenses with spectroscopy and Pan-STARRS imaging'
 description = 'All confirmed lenses with both a spectrum in the database and Pan-STARRS imaging'
-query_detail = {'lens-flag_confirmed':True, 'spectrum-instrument':[str(pk) for pk in list(Instrument.objects.filter(base_types__contains='Spectrum').values_list('pk', flat=True))],
+query_detail = {'lens-flag':'CONFIRMED', 'spectrum-instrument':[str(pk) for pk in list(Instrument.objects.filter(base_types__contains='Spectrum').values_list('pk', flat=True))],
                 'imaging-instrument':[str(Instrument.objects.get(name='Pan-STARRS1').pk)]}
 names.append(name)
 descriptions.append(description)

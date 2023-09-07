@@ -44,9 +44,7 @@ surveys = ['PanSTARRS', 'LegacySurveyDR10'] #, 'LegacySurveyNorth']
 bandss = ['grizY', 'grz'] #, 'grz']
 instruments = ['Pan-STARRS1', 'Legacy Survey (DR10)']#, 'Legacy Survey (North)']
 
-#for kk in range(len(surveys)):
-kk=1
-if 1==1:
+for kk in range(len(surveys)):
     survey, bands, instrument = surveys[kk], bandss[kk], instruments[kk]
     uploads = []
     jsonfiles = list(set(glob.glob(jsonpath+'*_'+survey+'_*.json')) - set(glob.glob(jsonpath+'*_'+survey+'_*hotom*.json')))
