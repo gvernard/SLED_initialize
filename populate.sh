@@ -10,7 +10,7 @@ fi
 database=$1
 spd=${2%/} # This has to be the SLED project dir, i.e. the directory containing SLED_api
 dir=$(pwd)
-launch=${spd}/SLED_opetations/launch_server
+launch=${spd}/SLED_operations/launch_server
 
 
 echo $spd

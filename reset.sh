@@ -11,7 +11,7 @@ fi
 database=$1
 host=$2
 spd=${3%/} # This has to be the SLED project dir, i.e. the directory containing SLED_api
-launch=${spd}/SLED_opetations/launch_server
+launch=${spd}/SLED_operations/launch_server
 
 
 # Resetting the server can occur only on django01

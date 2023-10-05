@@ -2,7 +2,7 @@
 
 database=$1
 spd=$2
-launch=${spd}/SLED_opetations/launch_server
+launch=${spd}/SLED_operations/launch_server
 echo "Working on database: "$database
 
 
