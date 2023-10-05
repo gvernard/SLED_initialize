@@ -10,6 +10,8 @@ fi
 database=$1
 spd=${2%/} # This has to be the SLED project dir, i.e. the directory containing SLED_api
 dir=$(pwd)
+launch=${spd}/SLED_opetations/launch_server
+
 
 echo $spd
 echo $dir
@@ -30,26 +32,26 @@ else
 fi
 
 
-export DJANGO_SECRET_KEY=`cat ${spd}/launch_server/secret_key.txt`
-export DJANGO_EMAIL_PASSWORD=`cat ${spd}/launch_server/email_password.txt`   
+export DJANGO_SECRET_KEY=`cat ${launch}/secret_key.txt`
+export DJANGO_EMAIL_PASSWORD=`cat ${launch}/email_password.txt`   
 export DJANGO_STATIC_ROOT=/projects/astro/sled/STATIC
 export DJANGO_DOMAIN_NAME=sled.astro.unige.ch
 if [ $database = "test" ]
 then
     export DJANGO_MEDIA_ROOT=/projects/astro/sled/FILES_TEST
-    export DJANGO_DB_FILE=${spd}/launch_server/test_server.cnf
-    cp ${spd}/launch_server/settings_debug.py ${spd}/SLED_api/mysite/settings.py
+    export DJANGO_DB_FILE=${launch}/test_server.cnf
+    cp ${launch}/settings_debug.py ${spd}/SLED_api/mysite/settings.py
 else
     export DJANGO_MEDIA_ROOT=/projects/astro/sled/FILES
-    export DJANGO_DB_FILE=${spd}/launch_server/test_localhost.cnf
+    export DJANGO_DB_FILE=${launch}/test_localhost.cnf
     export DJANGO_NO_LAST_LOGIN=false
-    cp ${spd}/launch_server/settings_server_root.py ${spd}/SLED_api/mysite/settings.py
+    cp ${launch}/settings_server_root.py ${spd}/SLED_api/mysite/settings.py
 fi
 
 
 if [ $database = "sqlite" ]
 then
-    cp ${spd}/launch_server/settings_localhost_sqlite.py ${spd}/SLED_api/mysite/settings.py
+    cp ${launch}/settings_localhost_sqlite.py ${spd}/SLED_api/mysite/settings.py
 fi
 
 echo "Adding users..."

@@ -11,7 +11,7 @@ fi
 database=$1
 host=$2
 spd=${3%/} # This has to be the SLED project dir, i.e. the directory containing SLED_api
-
+launch=${spd}/SLED_opetations/launch_server
 
 
 # Resetting the server can occur only on django01
@@ -76,7 +76,7 @@ echo "Deleting files...OK"
 # Server settings
 if [ $host = "localhost" ]
 then
-    cp ${spd}/launch_server/settings_localhost_sqlite.py ${spd}/SLED_api/mysite/settings.py
+    cp ${launch}/settings_localhost_sqlite.py ${spd}/SLED_api/mysite/settings.py
 else
     if [ $database = "test" ]
     then
@@ -84,16 +84,16 @@ else
 	export DJANGO_EMAIL_PASSWORD='ixzdsavcwdgohgrj'
 	export DJANGO_MEDIA_ROOT=/projects/astro/sled/FILES_TEST
 	export DJANGO_STATIC_ROOT=/projects/astro/sled/STATIC
-	export DJANGO_DB_FILE=${spd}/launch_server/test_server.cnf
-	cp ${spd}/launch_server/settings_debug.py ${spd}/SLED_api/mysite/settings.py
+	export DJANGO_DB_FILE=${launch}/test_server.cnf
+	cp ${launch}/settings_debug.py ${spd}/SLED_api/mysite/settings.py
     else
-	export DJANGO_SECRET_KEY=`cat ${spd}/launch_server/secret_key.txt`
-	export DJANGO_EMAIL_PASSWORD=`cat ${spd}/launch_server/email_password.txt`
+	export DJANGO_SECRET_KEY=`cat ${launch}/secret_key.txt`
+	export DJANGO_EMAIL_PASSWORD=`cat ${launch}/email_password.txt`
 	export DJANGO_MEDIA_ROOT=/projects/astro/sled/FILES
 	export DJANGO_STATIC_ROOT=/projects/astro/sled/STATIC
-	export DJANGO_DB_FILE=${spd}/launch_server/test_localhost.cnf
+	export DJANGO_DB_FILE=${launch}/test_localhost.cnf
 	export DJANGO_NO_LAST_LOGIN=false
-	cp ${spd}/launch_server/settings_server_root.py ${spd}/SLED_api/mysite/settings.py
+	cp ${launch}/settings_server_root.py ${spd}/SLED_api/mysite/settings.py
     fi
 fi
 
