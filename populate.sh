@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $# != 2 ]
+if [ $# != 1 ]
 then
     echo "One command line argument is required: "
     echo "  1 - the full path to the SLED project directory, i.e. the directory containing SLED_api"
