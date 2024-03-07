@@ -1,26 +1,26 @@
 #!/bin/bash
 
-if [ $# != 1 ]
+if [ $# != 2 ]
 then
-    echo "One command line argument is required: "
-    echo "  1 - the full path to the SLED project directory, i.e. the directory containing SLED_api"
+    echo "Two command line arguments are required: "
+    echo "  1 - the mode of the django server: 'production' or 'debug' or 'production_ro'"
+    echo "  2 - the full path to the SLED project directory, i.e. the directory containing SLED_api"
     exit 0
 fi
-spd=${1%/} # This has to be the SLED project dir, i.e. the directory containing SLED_api
+mode=$1
+spd=${2%/}
 dir=$(pwd)
 
-
-echo $spd
-echo $dir
+sudo ${root_path}/SLED_operations/launch/set_server.sh $mode $root_path
 
 # Check host name - needed for calls to the API by the upload scripts
-host_ip=`python -c 'import socket; print(socket.gethostbyname(socket.gethostname()))'`
+host_ip=`python3 -c 'import socket; print(socket.gethostbyname(socket.gethostname()))'`
 echo "Host IP is: " $host_ip
 
 
 
 echo "Adding users..."
-sudo python ${spd}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
+sudo python3 ${spd}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
 echo "Adding users...OK"
 exit
 
