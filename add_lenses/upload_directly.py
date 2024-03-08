@@ -251,6 +251,7 @@ for zzz, eachcsv in enumerate(csvs):
         continue
 
     # Sending the request
+    print(form_data)
     r  = c.post('/api/upload-lenses/', data=form_data, content_type="application/json")
 
     # Printing the response of the request
