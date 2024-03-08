@@ -143,7 +143,7 @@ for zzz, eachcsv in enumerate(csvs):
         #if lens_dict['imagename']=='':
         #    lens_dict['imagename'] = lens_dict['name'].split(',')[0].strip()+'.png'
 
-        print(lens_dict['imagename'])
+        print(lens_dict)
         img = cv2.imread(mugshot_dir+lens_dict['imagename'])
         string_img = base64.b64encode(cv2.imencode('.jpg', img)[1]).decode()
         lens_dict['mugshot'] = string_img 
