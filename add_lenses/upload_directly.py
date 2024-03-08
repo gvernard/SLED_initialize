@@ -251,7 +251,7 @@ for zzz, eachcsv in enumerate(csvs):
         continue
 
     # Sending the request
-    print(form_data['id'])
+    print(form_data)
     for key, value in form_data.items():
         if key not in ['nugshot']:
             print(value)
