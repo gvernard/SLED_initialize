@@ -254,7 +254,7 @@ for zzz, eachcsv in enumerate(csvs):
     for datum in form_data:
         for key, value in datum.items():
             if key not in ['mugshot']:
-                print(value)
+                print(key,value)
     r  = c.post('/api/upload-lenses/', data=form_data, content_type="application/json")
     print('OOOKKK')
     
