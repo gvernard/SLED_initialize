@@ -81,7 +81,7 @@ for zzz, eachcsv in enumerate(csvs):
     allupdates = []
     #if zzz < 234:
     #    continue
-    #print(eachcsv)
+    print(eachcsv)
     lens_dicts = []
     
     data = pd.read_csv(eachcsv, skipinitialspace=True)
