@@ -120,7 +120,7 @@ for zzz, eachcsv in enumerate(csvs):
         flags_dict = {'flag_confirmed':'CONFIRMED', 'flag_candidate':'CANDIDATE', 'flag_contaminant':'CONTAMINANT'}
         for flagstring in ['flag_confirmed', 'flag_candidate', 'flag_contaminant']:
             #print(lens_dict[flagstring])
-            if lens_dict[flagstring].strip() in ['F', '', False]:
+            if lens_dict[flagstring] in ['F', '', False]:
                 lens_dict[flagstring] = False
             else:
                 lens_dict[flagstring] = True
