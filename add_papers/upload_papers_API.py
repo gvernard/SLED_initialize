@@ -79,7 +79,7 @@ for i, eachjson in enumerate(jsons):
     else:
         print("Something went wrong!")
         print(eachjson)
-        df
+        #df
     #x = input()
     #print(r.text)
 

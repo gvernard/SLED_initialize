@@ -81,7 +81,7 @@ for kk in range(len(surveys)):
                 #    print('datafile', datafile)
                 
                 if datafile==0:
-                    df
+                    #df
                     continue
                 #if the data exists, create the json and image for upload
                 if datafile is not None:

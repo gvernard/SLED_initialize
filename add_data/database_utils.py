@@ -263,13 +263,13 @@ def upload_redshifts_to_db_direct(datalist, username):
         if not lens:
             print('No lens found for the following data upload')
             print(data)
-            df
+            #df
             continue
 
         if len(lens)>1:
             print('too many lens matches found for ', lens)
             print(data)
-            df
+            #df
             continue
 
         if lens:

@@ -138,7 +138,7 @@ for zzz, eachcsv in enumerate(csvs):
 
         if k!=1:
             print('bad!', lens_dict)
-            df
+            #df
 
         #if lens_dict['imagename']=='':
         #    lens_dict['imagename'] = lens_dict['name'].split(',')[0].strip()+'.png'
@@ -169,7 +169,7 @@ for zzz, eachcsv in enumerate(csvs):
             dblens = dblenses[0]
             if len(dblenses)>1:
                 print('why are there multiple matches?')
-                df
+                #df
             #no updates for a confirmed lens
             #if dblens['flag_confirmed']:
             #    continue
@@ -285,4 +285,4 @@ for zzz, eachcsv in enumerate(csvs):
             print("Upload completed successfully!")
         else:
             print(r.content)
-            df
+            #df
