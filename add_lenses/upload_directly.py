@@ -251,10 +251,10 @@ for zzz, eachcsv in enumerate(csvs):
         continue
 
     # Sending the request
-    print(form_data)
-    for key, value in form_data.items():
-        if key not in ['nugshot']:
-            print(value)
+    for datum in form_data:
+        for key, value in datum.items():
+            if key not in ['nugshot']:
+                print(value)
     r  = c.post('/api/upload-lenses/', data=form_data, content_type="application/json")
 
     # Printing the response of the request
