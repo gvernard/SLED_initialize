@@ -106,7 +106,7 @@ def upload_imaging_to_db_direct(datalist, username):
         finaldata.pop('dec')
 
         imaging = Imaging(**finaldata)
-
+        print(lens,imaging)
         imaging.owner_id = Users.objects.get(username=username).id
         if data['exists']:
             imaging.image.name = '/temporary/admin/' + savename
