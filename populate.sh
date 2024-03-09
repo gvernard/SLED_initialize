@@ -19,54 +19,55 @@ echo "Host IP is: " $host_ip
 
 
 
-echo "Adding users..."
-sudo -E python3 ${root_path}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
-echo "Adding users...OK"
+#echo "Adding users..."
+#sudo -E python3 ${root_path}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
+#echo "Adding users...OK"
 
-echo "Adding lenses..."
-cd ${dir}/add_lenses
-sudo -E python3 ${root_path}/SLED_api/manage.py shell < upload_directly.py > ../report_add_lenses.txt
-echo "Adding lenses...OK"
+#echo "Adding lenses..."
+#cd ${dir}/add_lenses
+#sudo -E python3 ${root_path}/SLED_api/manage.py shell < upload_directly.py > ../report_add_lenses.txt
+#echo "Adding lenses...OK"
 
-echo "Adding instruments and bands..."
-cd ${dir}/add_data
-sudo -E python3 ${root_path}/SLED_api/manage.py shell < add_instruments_bands.py
-echo "Adding instruments and bands...OK"
+# echo "Adding instruments and bands..."
+# cd ${dir}/add_data
+# sudo -E python3 ${root_path}/SLED_api/manage.py shell < add_instruments_bands.py
+# echo "Adding instruments and bands...OK"
 
-echo "Adding spectra..."
-cd ${dir}/add_data
-sudo -E python3 upload_initial_spectra.py ${root_path}/SLED_api > ../report_add_spectra.txt
-echo "Adding spectra...OK"
+# echo "Adding queries..."
+# cd ${dir}/add_queries
+# sudo -E python3 ${root_path}/SLED_api/manage.py shell < create_queries.py
+# echo "Adding queries...OK"
 
-echo "Adding queries..."
-cd ${dir}/add_queries
-sudo -E python3 ${root_path}/SLED_api/manage.py shell < create_queries.py
-echo "Adding queries...OK"
+# echo "Adding collections..."
+# cd ${dir}/add_collections
+# sudo -E python3 ${root_path}/SLED_api/manage.py shell < upload_collection.py > ../report_add_collections.txt
+# echo "Adding collections...OK"
 
-echo "Adding collections..."
-cd ${dir}/add_collections
-sudo -E python3 ${root_path}/SLED_api/manage.py shell < upload_collection.py > ../report_add_collections.txt
-echo "Adding collections...OK"
+# echo "Adding papers..."
+# cd ${dir}/add_papers
+# sudo -E python3 ${root_path}/SLED_api/manage.py shell < upload_papers_API.py > ../report_add_papers.txt
+# echo "Adding papers...OK"
 
-echo "Adding papers..."
-cd ${dir}/add_papers
-sudo -E python3 ${root_path}/SLED_api/manage.py shell < upload_papers_API.py > ../report_add_papers.txt
-echo "Adding papers...OK"
-
-echo "Adding redshifts..."
-cd ${dir}/add_data
-sudo -E python3 upload_initial_redshifts.py > ../report_add_redshifts.txt
-echo "Adding redshifts...OK"
+# echo "Adding redshifts..."
+# cd ${dir}/add_data
+# sudo -E python3 upload_initial_redshifts.py > ../report_add_redshifts.txt
+# echo "Adding redshifts...OK"
 
 echo "Adding HST imaging data..."
 cd ${dir}/add_data
 sudo -E python3 upload_initial_HST_imaging.py ${root_path}/SLED_api > ../report_add_HST_imaging.txt
 echo "Adding HST imaging data...OK"
+exit
 
 echo "Adding imaging data..."
 cd ${dir}/add_data
 sudo -E python3 upload_initial_imaging.py ${root_path}/SLED_api > ../report_add_imaging.txt
 echo "Adding imaging data...OK"
+
+echo "Adding spectra..."
+cd ${dir}/add_data
+sudo -E python3 upload_initial_spectra.py ${root_path}/SLED_api > ../report_add_spectra.txt
+echo "Adding spectra...OK"
 
 echo "Adding catalogue data..."
 cd ${dir}/add_data
