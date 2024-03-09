@@ -1,5 +1,5 @@
 import os
-import datetime
+from datetime import date
 import numpy as np 
 
 import requests
@@ -111,7 +111,7 @@ def upload_imaging_to_db_direct(datalist, username):
         if data['exists']:
             imaging.image.name = '/temporary/admin/' + savename
         if 'date_taken' in finaldata.keys():
-            imaging.date_taken = make_aware( datetime.date.fromisoformat(finaldata['date_taken']).replace(hour=0,minute=0,second=0,microsecond=0) )
+            imaging.date_taken = make_aware( date.fromisoformat(finaldata['date_taken']).replace(hour=0,minute=0,second=0,microsecond=0) )
         imaging.save()
 
         imaging_list.append(imaging)
@@ -168,10 +168,10 @@ def upload_spectrum_to_db_direct(datalist, username):
         if data['exists']:
             spectrum.image.name = '/temporary/admin/' + savename
         if 'date_taken' in finaldata.keys():
-            spectrum.date_taken = make_aware( datetime.date.fromisoformat(finaldata['date_taken']).replace(hour=0,minute=0,second=0,microsecond=0) )
+            spectrum.date_taken = make_aware( date.fromisoformat(finaldata['date_taken']).replace(hour=0,minute=0,second=0,microsecond=0) )
         else:
             #we apparently made the date taken a NOT_NULL field
-            spectrum.date_taken = make_aware(datetime.date.fromisoformat('1858-11-17'))
+            spectrum.date_taken = make_aware(date.fromisoformat('1858-11-17'))
         spectrum.save()
 
         spectrum_list.append(spectrum)
@@ -235,10 +235,10 @@ def upload_catalogue_to_db_direct(datalist, username):
             catalogue = Catalogue(**finaldata)
             catalogue.owner_id = Users.objects.get(username=username).id
             if 'date_taken' in finaldata.keys():
-                catalogue.date_taken = make_aware( datetime.date.fromisoformat(finaldata['date_taken']).replace(hour=0,minute=0,second=0,microsecond=0) )
+                catalogue.date_taken = make_aware( date.fromisoformat(finaldata['date_taken']).replace(hour=0,minute=0,second=0,microsecond=0) )
             else:
                 #we apparently made the date taken a NOT_NULL field
-                catalogue.date_taken = make_aware(datetime.date.fromisoformat('1858-11-17'))
+                catalogue.date_taken = make_aware(date.fromisoformat('1858-11-17'))
             catalogue.save()
             
             catalogue_list.append(catalogue)
