@@ -55,7 +55,7 @@ echo "Host IP is: " $host_ip
 
 echo "Adding HST imaging data..."
 cd ${dir}/add_data
-sudo -E python3 upload_initial_HST_imaging.py ${root_path}/SLED_api > ../report_add_HST_imaging.txt
+sudo -E python3 upload_initial_HST_imaging.py ${root_path}/SLED_api
 echo "Adding HST imaging data...OK"
 exit
 
