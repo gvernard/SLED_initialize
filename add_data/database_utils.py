@@ -112,7 +112,7 @@ def upload_imaging_to_db_direct(datalist, username):
             imaging.image.name = '/temporary/admin/' + savename
         if 'date_taken' in finaldata.keys():
             print(finaldata['date_taken'])
-            imaging.date_taken = make_aware( datetime.datetime.strptime(finaldata['date_taken'],'%Y-%m-%d %H-%M-%S.%f').replace(hour=0,minute=0,second=0,microsecond=0) )
+            imaging.date_taken = make_aware( datetime.datetime.strptime(finaldata['date_taken'],'%Y-%m-%d %H:%M:%S.%f').replace(hour=0,minute=0,second=0,microsecond=0) )
         imaging.save()
 
         imaging_list.append(imaging)
