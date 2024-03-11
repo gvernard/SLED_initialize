@@ -92,11 +92,11 @@ for zzz, eachcsv in enumerate(csvs):
 
     #loop through each lens in the paper csv
     for i in range(len(data)):
-        print("Lens name: ",lens_dict['name'])
         #remove duplicate uploads, they are often multiple redshifts that were put into too many columns
         #Ive checked to make sure they are the same lens now...
 
         lens_dict = data.iloc[i].to_dict()
+        print("Lens name: ",lens_dict['name'])
         if lens_dict['name'] in [lens['name'] for lens in lens_dicts]:
             print('duplicate name found, maybe need to rename the lens', lens_dict['name'], eachcsv) #, eachcsv)
             #dfdf
