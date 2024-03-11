@@ -259,6 +259,8 @@ for zzz, eachcsv in enumerate(csvs):
                 datum[key] = bool(value)
             if key in ['original_score']:
                 datum[key] = str(value)
+            if key in ['n_img']:
+                datum[key] = int(value)
             if key not in ['mugshot']:
                 print(key,value,type(value))
             #if key == "name":
