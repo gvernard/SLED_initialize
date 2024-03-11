@@ -257,6 +257,8 @@ for zzz, eachcsv in enumerate(csvs):
         for key, value in datum.items():
             if key in ['flag_discovery','z_source_secure','flag_zsource','z_lens_secure','flag_zlens']:
                 datum[key] = bool(value)
+            if key in ['original_score','index']:
+                datum[key] = float(value)
             if key not in ['mugshot']:
                 print(key,value,type(value))
             #if key == "name":
