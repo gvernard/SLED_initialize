@@ -23,10 +23,11 @@ echo "Host IP is: " $host_ip
 #sudo -E python3 ${root_path}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
 #echo "Adding users...OK"
 
-#echo "Adding lenses..."
-#cd ${dir}/add_lenses
-#sudo -E python3 ${root_path}/SLED_api/manage.py shell < upload_directly.py > ../report_add_lenses.txt
-#echo "Adding lenses...OK"
+echo "Adding lenses..."
+cd ${dir}/add_lenses
+sudo -E python3 ${root_path}/SLED_api/manage.py shell < upload_directly.py > ../report_add_lenses.txt
+echo "Adding lenses...OK"
+exit
 
 # echo "Adding instruments and bands..."
 # cd ${dir}/add_data
@@ -53,28 +54,27 @@ echo "Host IP is: " $host_ip
 # sudo -E python3 upload_initial_redshifts.py > ../report_add_redshifts.txt
 # echo "Adding redshifts...OK"
 
-echo "Adding HST imaging data..."
-cd ${dir}/add_data
-sudo -E python3 upload_initial_HST_imaging.py ${root_path}/SLED_api
-echo "Adding HST imaging data...OK"
-exit
+#echo "Adding HST imaging data..."
+#cd ${dir}/add_data
+#sudo -E python3 upload_initial_HST_imaging.py ${root_path}/SLED_api
+#echo "Adding HST imaging data...OK"
 
-echo "Adding imaging data..."
-cd ${dir}/add_data
-sudo -E python3 upload_initial_imaging.py ${root_path}/SLED_api > ../report_add_imaging.txt
-echo "Adding imaging data...OK"
+#echo "Adding imaging data..."
+#cd ${dir}/add_data
+#sudo -E python3 upload_initial_imaging.py ${root_path}/SLED_api > ../report_add_imaging.txt
+#echo "Adding imaging data...OK"
 
-echo "Adding spectra..."
-cd ${dir}/add_data
-sudo -E python3 upload_initial_spectra.py ${root_path}/SLED_api > ../report_add_spectra.txt
-echo "Adding spectra...OK"
+#echo "Adding spectra..."
+#cd ${dir}/add_data
+#sudo -E python3 upload_initial_spectra.py ${root_path}/SLED_api > ../report_add_spectra.txt
+#echo "Adding spectra...OK"
 
-echo "Adding catalogue data..."
-cd ${dir}/add_data
-sudo -E python3 upload_initial_catalogues_direct.py ${root_path}/SLED_api > ../report_add_catalogues.txt
-echo "Adding catalogue data...OK"
+#echo "Adding catalogue data..."
+#cd ${dir}/add_data
+#sudo -E python3 upload_initial_catalogues_direct.py ${root_path}/SLED_api > ../report_add_catalogues.txt
+#echo "Adding catalogue data...OK"
 
-echo "Deleting notifications..."
-cd ${dir}/
-sudo -E python3 ${root_path}/SLED_api/manage.py shell < delete_notifications.py
-echo "Deleting notifications...OK"
+#echo "Deleting notifications..."
+#cd ${dir}/
+#sudo -E python3 ${root_path}/SLED_api/manage.py shell < delete_notifications.py
+#echo "Deleting notifications...OK"
