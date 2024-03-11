@@ -278,6 +278,7 @@ for zzz, eachcsv in enumerate(csvs):
                 print(form_data)
         else:
                 print("Something went wrong!")
+                print(form_data)
         
 
     if len(allupdates)>0:
