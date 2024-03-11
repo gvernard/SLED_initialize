@@ -81,7 +81,7 @@ for zzz, eachcsv in enumerate(csvs):
     allupdates = []
     #if zzz < 234:
     #    continue
-    print(zzz,eachcsv)
+    print("Running paper: ",zzz,eachcsv)
     lens_dicts = []
     
     data = pd.read_csv(eachcsv, skipinitialspace=True)
@@ -92,6 +92,7 @@ for zzz, eachcsv in enumerate(csvs):
 
     #loop through each lens in the paper csv
     for i in range(len(data)):
+        print("Lens name: ",lens_dict['name'])
         #remove duplicate uploads, they are often multiple redshifts that were put into too many columns
         #Ive checked to make sure they are the same lens now...
 
