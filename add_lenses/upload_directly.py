@@ -79,8 +79,8 @@ for eachcsv in csvs:
 for zzz, eachcsv in enumerate(csvs):
     #print(zzz,zzz,zzz)
     allupdates = []
-    #if zzz < 234:
-    #    continue
+    if zzz < 210:
+        continue
     print("Running paper: ",zzz,eachcsv)
     lens_dicts = []
     
@@ -281,8 +281,8 @@ for zzz, eachcsv in enumerate(csvs):
                     datum[key] = int(value)
                 else:
                     datum[key] = 0
-            #if key not in ['mugshot']:
-            #    print(key,value,type(value))
+            if key not in ['mugshot']:
+                print(key,value,type(value))
             #if key == "name":
             #    print(value)
 
