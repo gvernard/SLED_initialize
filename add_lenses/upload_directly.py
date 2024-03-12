@@ -243,17 +243,17 @@ for zzz, eachcsv in enumerate(csvs):
 
             for key, value in update_data.items():
                 if key in ['flag_discovery','z_source_secure','flag_zsource','z_lens_secure','flag_zlens']:
-                    datum[key] = bool(value)
+                    update_data[key] = bool(value)
                 if key in ['original_score']:
-                    datum[key] = str(value)
+                    update_data[key] = str(value)
                 if key == 'n_img':
                     if value or isinstance(value,np.int64):
-                        datum[key] = int(value)
+                        update_data[key] = int(value)
                 if key == 'index':
                     if value:
-                        datum[key] = int(value)
+                        update_data[key] = int(value)
                     else:
-                        datum[key] = 0
+                        update_data[key] = 0
 
             if send_update:
                 allupdates.append(update_data)
