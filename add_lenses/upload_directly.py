@@ -262,8 +262,6 @@ for zzz, eachcsv in enumerate(csvs):
             if key in ['n_img']:
                 if value:
                     datum[key] = int(value)
-                else:
-                    datum[key] = 0
             if key == 'index':
                 if value:
                     datum[key] = int(value)
