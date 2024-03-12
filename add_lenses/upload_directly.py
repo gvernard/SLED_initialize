@@ -261,6 +261,11 @@ for zzz, eachcsv in enumerate(csvs):
                 datum[key] = str(value)
             if key in ['n_img']:
                 datum[key] = int(value)
+            if key == 'index':
+                if value:
+                    datum[key] = int(value)
+                else:
+                    datum[key] = 0
             if key not in ['mugshot']:
                 print(key,value,type(value))
             #if key == "name":
