@@ -282,7 +282,7 @@ for zzz, eachcsv in enumerate(csvs):
     if r.status_code==200:
         print("Upload completed successfully!")
     else:
-        print(r.content)
+        print(eachcsv,r.content)
         if 'text' in r:
             if 'duplicates' in r.text:
                 print("Something went wrong (duplicates)!")
