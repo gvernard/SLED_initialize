@@ -19,9 +19,9 @@ echo "Host IP is: " $host_ip
 
 
 
-#echo "Adding users..."
-#sudo -E python3 ${root_path}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
-#echo "Adding users...OK"
+echo "Adding users..."
+sudo -E python3 ${root_path}/SLED_api/manage.py shell < ${dir}/add_users/populate_db.py
+echo "Adding users...OK"
 
 echo "Adding lenses..."
 cd ${dir}/add_lenses

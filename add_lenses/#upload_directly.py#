@@ -79,8 +79,8 @@ for eachcsv in csvs:
 for zzz, eachcsv in enumerate(csvs):
     #print(zzz,zzz,zzz)
     allupdates = []
-    #if zzz < 212:
-    #    continue
+    if zzz < 212:
+        continue
     print("Running paper: ",zzz,eachcsv)
     lens_dicts = []
     
@@ -281,20 +281,21 @@ for zzz, eachcsv in enumerate(csvs):
                     datum[key] = int(value)
                 else:
                     datum[key] = 0
-            #if key not in ['mugshot']:
-            #    print(key,value,type(value))
+            if key not in ['mugshot']:
+                print(key,value,type(value))
             #if key == "name":
             #    print(value)
 
                 
     r  = c.post('/api/upload-lenses/', data=form_data, content_type="application/json")
-    #print('OOOKKK')
+    print(eachcsv,r.content)
+    print('OOOKKK')
     
     # Printing the response of the request
     if r.status_code==200:
         print("Upload completed successfully!")
     else:
-        #print(eachcsv,r.content)
+        print(eachcsv,r.content)
         if 'text' in r:
             if 'duplicates' in r.text:
                 print("Something went wrong (duplicates)!")
