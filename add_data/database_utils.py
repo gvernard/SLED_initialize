@@ -105,7 +105,7 @@ def upload_imaging_to_db_direct(datalist, username):
                 savename = data['image']
             f = open(data['image'],mode="rb")
             myfile = File(f)
-            imaging.image.save(savename,myfile)
+            imaging.image.save(savename,myfile,save=False)
         if 'date_taken' in finaldata.keys():
             print(finaldata['date_taken'])
             imaging.date_taken = make_aware( datetime.datetime.strptime(finaldata['date_taken'],'%Y-%m-%d %H:%M:%S.%f').replace(hour=0,minute=0,second=0,microsecond=0) )
@@ -129,17 +129,6 @@ def upload_spectrum_to_db_direct(datalist, username):
             print(i, len(datalist))
         finaldata = data.copy()
 
-        path = settings.MEDIA_ROOT + '/temporary/admin/'
-        if not os.path.exists(path):
-            os.makedirs(path)
-
-        #print(data)
-        if data['exists']:
-            if '/' in data['image']:
-                savename = data['image'].split('/')[-1]
-            else:
-                savename = data['image']
-
         finaldata['instrument'] = Instrument.objects.get(name=data['instrument'])
         lens = match_to_lens(float(data['ra']), float(data['dec']))
         if not lens:
@@ -160,7 +149,13 @@ def upload_spectrum_to_db_direct(datalist, username):
         spectrum = Spectrum(**finaldata)
         spectrum.owner_id = Users.objects.get(username=username).id
         if data['exists']:
-            spectrum.image.name = savename
+            if '/' in data['image']:
+                savename = data['image'].split('/')[-1]
+            else:
+                savename = data['image']
+            f = open(data['image'],mode="rb")
+            myfile = File(f)
+            spectrum.image.save(savename,myfile,save=False)
         if 'date_taken' in finaldata.keys():
             spectrum.date_taken = make_aware( datetime.datetime.strptime(finaldata['date_taken'],'%Y-%m-%d %H:%M:%S.%f').replace(hour=0,minute=0,second=0,microsecond=0) )
         else:
