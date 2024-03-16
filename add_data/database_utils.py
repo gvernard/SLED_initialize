@@ -17,6 +17,7 @@ from lenses.models import Catalogue, Imaging, Spectrum, Instrument, Band, Users,
 from api.serializers import ImagingDataUploadSerializer
 from django.db.models import Q, F, Func, FloatField, CheckConstraint
 from django.utils.timezone import make_aware
+from django.core.files import File
 from actstream import action
 
 
@@ -74,17 +75,6 @@ def upload_imaging_to_db_direct(datalist, username):
     for data in datalist:
         finaldata = data.copy()
 
-        path = settings.MEDIA_ROOT + '/temporary/admin/'
-        if not os.path.exists(path):
-            os.makedirs(path)
-
-        #check if the data exists and therefore should have an image
-        if data['exists']:
-            if '/' in data['image']:
-                savename = data['image'].split('/')[-1]
-            else:
-                savename = data['image']
-
         finaldata['instrument'] = Instrument.objects.get(name=data['instrument'])
 
         #if data['band'] not in list(Band.objects.all().values_list('name', flat=True).distinct()):
@@ -105,8 +95,17 @@ def upload_imaging_to_db_direct(datalist, username):
         imaging = Imaging(**finaldata)
         print(lens,imaging)
         imaging.owner_id = Users.objects.get(username=username).id
+
+
+        #check if the data exists and therefore should have an image
         if data['exists']:
-            imaging.image.name = savename
+            if '/' in data['image']:
+                savename = data['image'].split('/')[-1]
+            else:
+                savename = data['image']
+            f = open(data['image'])
+            myfile = File(f)
+            imaging.image.save(savename,myfile)
         if 'date_taken' in finaldata.keys():
             print(finaldata['date_taken'])
             imaging.date_taken = make_aware( datetime.datetime.strptime(finaldata['date_taken'],'%Y-%m-%d %H:%M:%S.%f').replace(hour=0,minute=0,second=0,microsecond=0) )
