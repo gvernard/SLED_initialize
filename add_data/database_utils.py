@@ -85,9 +85,6 @@ def upload_imaging_to_db_direct(datalist, username):
             else:
                 savename = data['image']
 
-            with open(path + savename,'wb+') as destination:
-                destination.write(open(data['image'],'rb').read())
-
         finaldata['instrument'] = Instrument.objects.get(name=data['instrument'])
 
         #if data['band'] not in list(Band.objects.all().values_list('name', flat=True).distinct()):
@@ -109,7 +106,7 @@ def upload_imaging_to_db_direct(datalist, username):
         print(lens,imaging)
         imaging.owner_id = Users.objects.get(username=username).id
         if data['exists']:
-            imaging.image.name = '/temporary/admin/' + savename
+            imaging.image.name = savename
         if 'date_taken' in finaldata.keys():
             print(finaldata['date_taken'])
             imaging.date_taken = make_aware( datetime.datetime.strptime(finaldata['date_taken'],'%Y-%m-%d %H:%M:%S.%f').replace(hour=0,minute=0,second=0,microsecond=0) )
@@ -144,9 +141,6 @@ def upload_spectrum_to_db_direct(datalist, username):
             else:
                 savename = data['image']
 
-            with open(path + savename,'wb+') as destination:
-                destination.write(open(data['image'],'rb').read())
-
         finaldata['instrument'] = Instrument.objects.get(name=data['instrument'])
         lens = match_to_lens(float(data['ra']), float(data['dec']))
         if not lens:
@@ -167,7 +161,7 @@ def upload_spectrum_to_db_direct(datalist, username):
         spectrum = Spectrum(**finaldata)
         spectrum.owner_id = Users.objects.get(username=username).id
         if data['exists']:
-            spectrum.image.name = '/temporary/admin/' + savename
+            spectrum.image.name = savename
         if 'date_taken' in finaldata.keys():
             spectrum.date_taken = make_aware( datetime.datetime.strptime(finaldata['date_taken'],'%Y-%m-%d %H:%M:%S.%f').replace(hour=0,minute=0,second=0,microsecond=0) )
         else:
