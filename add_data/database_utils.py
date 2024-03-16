@@ -103,7 +103,7 @@ def upload_imaging_to_db_direct(datalist, username):
                 savename = data['image'].split('/')[-1]
             else:
                 savename = data['image']
-            f = open(data['image'])
+            f = open(data['image'],mode="rb")
             myfile = File(f)
             imaging.image.save(savename,myfile)
         if 'date_taken' in finaldata.keys():
