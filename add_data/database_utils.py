@@ -115,9 +115,9 @@ def upload_imaging_to_db_direct(datalist, username):
 
         imaging_list.append(imaging)
         if len(imaging_list) == 1000:
-            time.sleep(5)
-            ad_col = AdminCollection.objects.create(item_type="Imaging",myitems=imaging_list)
-            action.send(Users.objects.get(username='admin'),target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
+            #time.sleep(5)
+            #ad_col = AdminCollection.objects.create(item_type="Imaging",myitems=imaging_list)
+            #action.send(Users.objects.get(username='admin'),target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
             imaging_list.clear()
             
     return None
