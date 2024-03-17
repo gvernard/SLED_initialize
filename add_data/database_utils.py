@@ -1,4 +1,5 @@
 import os
+import time
 import datetime
 import numpy as np 
 
@@ -107,12 +108,14 @@ def upload_imaging_to_db_direct(datalist, username):
             myfile = File(f)
             imaging.image.save(savename,myfile,save=False)
         if 'date_taken' in finaldata.keys():
-            print(finaldata['date_taken'])
-            imaging.date_taken = make_aware( datetime.datetime.strptime(finaldata['date_taken'],'%Y-%m-%d %H:%M:%S.%f').replace(hour=0,minute=0,second=0,microsecond=0) )
+            new_date = datetime.datetime.strptime(finaldata['date_taken'],'%Y-%m-%d %H:%M:%S.%f').replace(hour=0,minute=0,second=0,microsecond=0)
+            imaging.date_taken = make_aware( new_date )
+            print(finaldata['date_taken'],new_date)
         imaging.save()
 
         imaging_list.append(imaging)
         if len(imaging_list) == 1000:
+            time.sleep(5)
             ad_col = AdminCollection.objects.create(item_type="Imaging",myitems=imaging_list)
             action.send(Users.objects.get(username='admin'),target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
             imaging_list.clear()
