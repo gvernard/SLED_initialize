@@ -73,6 +73,7 @@ def upload_imaging_to_db_direct(datalist, username):
     this function creates objects directly in the database; to be used by automatic uploads
     """
     imaging_list = []
+    counter = 0
     for data in datalist:
         finaldata = data.copy()
 
@@ -94,7 +95,7 @@ def upload_imaging_to_db_direct(datalist, username):
         finaldata.pop('dec')
 
         imaging = Imaging(**finaldata)
-        print(lens,imaging)
+        print(counter,lens,imaging)
         imaging.owner_id = Users.objects.get(username=username).id
 
 
@@ -114,12 +115,13 @@ def upload_imaging_to_db_direct(datalist, username):
         imaging.save()
 
         imaging_list.append(imaging)
+        counter = counter + 1
         if len(imaging_list) == 1000:
             #time.sleep(5)
             #ad_col = AdminCollection.objects.create(item_type="Imaging",myitems=imaging_list)
             #action.send(Users.objects.get(username='admin'),target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
             imaging_list.clear()
-            
+            counter = 0
     return None
 
 def upload_spectrum_to_db_direct(datalist, username):
