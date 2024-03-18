@@ -170,8 +170,8 @@ def upload_spectrum_to_db_direct(datalist, username):
 
         spectrum_list.append(spectrum)
         if len(spectrum_list) == 1000:
-            ad_col = AdminCollection.objects.create(item_type="Spectrum",myitems=spectrum_list)
-            action.send(Users.objects.get(username='admin'),target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
+            #ad_col = AdminCollection.objects.create(item_type="Spectrum",myitems=spectrum_list)
+            #action.send(Users.objects.get(username='admin'),target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
             spectrum_list.clear()
 
     return 0
@@ -240,8 +240,8 @@ def upload_catalogue_to_db_direct(datalist, username):
             print(data, 'no lens to match to this position')
 
         if len(catalogue_list) == 1000:
-            ad_col = AdminCollection.objects.create(item_type="Catalogue",myitems=catalogue_list)
-            action.send(Users.objects.get(username='admin'),target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
+            #ad_col = AdminCollection.objects.create(item_type="Catalogue",myitems=catalogue_list)
+            #action.send(Users.objects.get(username='admin'),target=Users.getAdmin().first(),verb='AddHome',level='success',action_object=ad_col)
             catalogue_list.clear()
 
     return 0
