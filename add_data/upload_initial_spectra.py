@@ -52,11 +52,15 @@ for i, jsonfile in enumerate(spectra):
     uploadjson = json.load(f)
     f.close()
     
-    if uploadjson['exists']:
-        uploadjson['image'] = imagepath + os.path.basename(uploadjson['image'])
-        uploadjson['lambda_min'] = uploadjson['lambda_min']/10.
-        uploadjson['lambda_max'] = uploadjson['lambda_max']/10.
+    #if uploadjson['exists']:
+    #    uploadjson['image'] = imagepath + os.path.basename(uploadjson['image'])
+    #    uploadjson['lambda_min'] = uploadjson['lambda_min']/10.
+    #    uploadjson['lambda_max'] = uploadjson['lambda_max']/10.
+    #
+    #uploads.append(uploadjson)
 
-    uploads.append(uploadjson)
+    if not uploadjson['exists']:
+        uploads.append(uploadjson)
 
+    
 upload = database_utils.upload_spectrum_to_db_direct(datalist=uploads, username=username)
